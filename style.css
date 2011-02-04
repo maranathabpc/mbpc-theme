@@ -1,0 +1,19 @@
+/*
+Theme Name: Maranatha BPC Theme
+Theme URI: http://www.maranatha-bpc.com/
+Description: Child theme of the twentyten wordpress theme
+Author: fonglh
+Template: twentyten
+Version: 1.0
+Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-background, threaded-comments, sticky-post, translation-ready, microformats, rtl-language-support, editor-style
+*/
+
+
+/* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+-------------------------------------------------------------- */
+
+@import url("../twentyten/style.css");
+
+#site-title a{
+	color: #009900;
+}
