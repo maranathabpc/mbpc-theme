@@ -14,6 +14,40 @@ Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-backgr
 
 @import url("../twentyten/style.css");
 
-#site-title a{
-	color: #FF9900;
+#site-title {
+	margin: 0;
 }
+
+#site-title a{
+	background-image:url('./images/MaranathaLogo.jpg');
+	background-repeat: no-repeat;
+	color: #000099;
+	height: 73px;
+	display: block;
+	text-indent: 60px;
+	width: 500px;
+}
+
+#site-description {
+	clear: both;
+	width: 940px;
+	text-align: right;
+	margin: 0 0 18px 0 ;
+}
+
+#search {
+	display: block;
+	float: right;
+}
+
+#cse-search-box input[type="submit"] {display: none;}
+
+#cse-search-results iframe{
+	width: 640px;
+}
+
+/*#header {
+	background: #000077;
+	padding: 0 0 0 0 ;
+	height: 90px;
+}*/
