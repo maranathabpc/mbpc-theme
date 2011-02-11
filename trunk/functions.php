@@ -64,5 +64,4 @@ function mbpc_register_taxnomies() {
 			)
 		);
 }
-
 ?>
