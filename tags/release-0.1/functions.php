@@ -17,4 +17,3 @@ function ubuntu_font() {
 }
 add_action('wp_head', 'ubuntu_font');
 ?>
-
