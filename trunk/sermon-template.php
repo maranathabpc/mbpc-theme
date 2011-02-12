@@ -12,7 +12,7 @@
 			<div id="content">
 <?php 
 
-query_posts(array('post_type'=>'sermon','posts_per_page'=>2,'paged'=>get_query_var('paged')));
+query_posts(array('post_type'=>'sermon','posts_per_page'=>5,'paged'=>get_query_var('paged')));
 ?>
 
 <?php

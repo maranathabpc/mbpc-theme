@@ -12,8 +12,10 @@ get_header(); ?>
 		<div id="container">
 			<div id="content" role="main">
 
+				<?php //$speaker_name = get_terms('speaker','fields=names&slug='.$term); 
+				$term = get_term_by('slug',get_query_var('term'),get_query_var('taxonomy'));?>
 				<h1 class="page-title"><?php
-					printf( __( 'Tag Archives: %s', 'twentyten' ), '<span>' . single_tag_title( '', false ) . '</span>' );
+				printf( __( 'Sermons by %s', 'twentyten' ), '<span>' . $term->name . '</span>' );
 				?></h1>
 
 <?php
@@ -21,7 +23,7 @@ get_header(); ?>
  * If you want to overload this in a child theme then include a file
  * called loop-tag.php and that will be used instead.
  */
- get_template_part( 'loop', 'tag' );
+ get_template_part( 'loop', 'sermons' );
 ?>
 			</div><!-- #content -->
 		</div><!-- #container -->
