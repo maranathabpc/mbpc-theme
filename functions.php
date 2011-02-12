@@ -80,4 +80,21 @@ function twentyten_posted_on() {
 		)
 	);
 }
+
+//add_filter('getarchives_where','mbpc_getarchives_where_filter',10,2);
+
+function mbpc_getarchives_where_filter($where, $r) {
+	$args = array(
+		'public' => true,
+		'_builtin' => false
+		);
+	$output = 'names';
+	$operator = 'and';
+
+	$post_types = get_post_types($args,$output,$operator);
+	$post_types = array_merge($post_types, array('post'));
+	$post_types = "'" . implode("' , '",$post_types ) . "'";
+
+	return str_replace("post_type = 'post'", "post_type IN ($post_types)", $where);
+}
 ?>
