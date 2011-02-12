@@ -11,22 +11,13 @@
 		<div id="container">
 			<div id="content">
 <?php 
-$type = 'sermon';
-$args=array(
-  'post_type' => $type,
-  'post_status' => 'publish',
-  'paged' => $paged,
-  'posts_per_page' => 5,
-  'caller_get_posts'=> 1
-);
-$temp = $wp_query;  // assign orginal query to temp variable for later use   
-$wp_query = null;
-$wp_query = new WP_Query($args); 
+
+query_posts(array('post_type'=>'sermon','posts_per_page'=>2,'paged'=>get_query_var('paged')));
 ?>
 
 <?php
 
- get_template_part( 'loop', 'index' );?>
+ get_template_part( 'loop', 'sermons' );?>
 			</div><!-- #content -->
 		</div><!-- #container -->
 
