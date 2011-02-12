@@ -1,5 +1,6 @@
 <?php
 
+//show home page in Wordpress Menu administration
 function home_page_menu_args($args) {
 	$args['show_home'] = true;
 	return $args;
@@ -10,15 +11,16 @@ add_filter('wp_page_menu_args', 'home_page_menu_args');
 //hide search form, especially from 404 page
 add_filter('get_search_form', create_function('$a',"return null;"));
 
+//insert link to ubuntu font
+add_action('wp_head', 'ubuntu_font');
 function ubuntu_font() {
 ?>
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'>
 <?php
 }
-add_action('wp_head', 'ubuntu_font');
 
+//register custom post types
 add_action('init', 'mbpc_create_my_post_types');
-
 function mbpc_create_my_post_types() {
 	register_post_type('sermon',
 						array(
@@ -36,14 +38,15 @@ function mbpc_create_my_post_types() {
 										'not_found_in_trash'=>__('No sermons found in trash')),
 							'description'=>__('Contains a link to the recording of the sermon as well as the text of the sermon summary'),
 							'public'=>true,
-							'menu_position'=>5
+							'menu_position'=>5,
+							'rewrite'=>array('with_front'=>false)
 						)
 						);
 }
 
-add_action('init', 'mbpc_register_taxnomies');
-
-function mbpc_register_taxnomies() {
+//register custom taxonomies
+add_action('init', 'mbpc_register_taxonomies');
+function mbpc_register_taxonomies() {
 	register_taxonomy(
 		'speaker',
 		array('sermon'),
@@ -66,4 +69,15 @@ function mbpc_register_taxnomies() {
 
 }
 
+//override the posted on function in the parent theme because we don't want the author name
+function twentyten_posted_on() {
+	printf( __( '<span class="%1$s">Posted on</span> %2$s', 'twentyten' ),
+		'meta-prep meta-prep-author',
+		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
+			get_permalink(),
+			esc_attr( get_the_time() ),
+			get_the_date()
+		)
+	);
+}
 ?>
