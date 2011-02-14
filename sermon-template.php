@@ -22,7 +22,6 @@ if(isset($existing['pagename']))
 //in WP 3.0.5, pagination doesn't work for custom post type archives even with the plugin
 else
 	$args = array_merge($wp_query->query,array('post_type'=>'sermon','paged'=>get_query_var('paged')));
-print_r($args);
 query_posts($args);
 ?>
 
