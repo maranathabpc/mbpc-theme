@@ -18,6 +18,7 @@ Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-backgr
 body {
 	font-family: 'Ubuntu', serif;
 	font-size: 13px;
+	background-color: #70A99A;
 }
 
 #main {
@@ -36,6 +37,7 @@ body {
 	display: block;
 	text-indent: 60px;
 	width: 500px;
+	margin-left: 20px;
 }
 
 #site-description {
@@ -43,6 +45,39 @@ body {
 	width: 940px;
 	text-align: right;
 	margin: 0 0 18px 0 ;
+}
+
+#content,
+#content input,
+#content textarea {
+	color: #1B1E26;
+}
+
+#wrapper {
+	background-color: #F2EFBD;
+}
+
+#header {
+	background-color: #B6D051;
+	overflow: auto;
+	/*padding: 0px 20px 0 0px;/**/
+	width: 100%;
+	position: relative;
+	left: -20px;
+	padding-right: 40px;
+}
+
+#access {
+	background-color: #2F6D7A;
+	padding-right: 40px;
+}
+
+#menu-main .menu-item a:hover {
+	background-color: #70A99A;
+}
+
+#primary {
+/*	background-color: #2F6D7A;*/
 }
 
 #search {
