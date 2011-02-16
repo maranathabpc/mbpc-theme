@@ -71,6 +71,15 @@
 					</span>
 				</<?php echo $heading_tag; ?>>
 
+			<div id="site-description"><?php bloginfo( 'description' ); ?></div>
+
+			</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+			  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
+				<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
+				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
+				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 				<!-- add google custom search box -->
 				<div id="search">
 				<form action="https://cosine.dyndns-ip.com/mbpc/search" id="cse-search-box">
@@ -84,15 +93,7 @@
 				</form>
 				<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
 				</div><!-- #search -->
-				<div id="site-description"><?php bloginfo( 'description' ); ?></div>
 
-			</div><!-- #branding -->
-
-			<div id="access" role="navigation">
-			  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
-				<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
-				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
-				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 			</div><!-- #access -->
 		</div><!-- #masthead -->
 	</div><!-- #header -->

@@ -16,9 +16,9 @@ Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-backgr
 
 
 body {
-	font-family: 'Ubuntu', serif;
+	font-family: 'Ubuntu', sans serif;
 	font-size: 13px;
-	background-color: #70A99A;
+	background-color: #FFFFFF;
 }
 
 #main {
@@ -58,13 +58,14 @@ body {
 }
 
 #header {
-	background-color: #B6D051;
+	background-color: #70A99A;
 	overflow: auto;
 	/*padding: 0px 20px 0 0px;/**/
 	width: 100%;
 	position: relative;
 	left: -20px;
 	padding-right: 40px;
+	top: -20px;
 }
 
 #access {
@@ -74,6 +75,11 @@ body {
 
 #menu-main .menu-item a:hover {
 	background-color: #70A99A;
+}
+
+/*hide title on main page*/
+.page-template-front-template-php h2 {
+	display: none;
 }
 
 #primary {
@@ -86,6 +92,9 @@ body {
 }
 
 #cse-search-box input[type="submit"] {display: none;}
+#cse-search-box {
+	margin-top: 5px;
+}
 
 #cse-search-results iframe{
 	width: 640px;
@@ -102,26 +111,12 @@ body {
 	margin-top: 5px;
 }
 
-#mission-label {
-	padding-top: 20px;
-	border-top:3px solid #466432;
-}
-
-#mission-label span a {
-	background-image:url('./images/missionlabel.jpg');
-	display:block;
-	height:80px;
-	width: 170px;
-	text-indent:-9999px;
-	margin: auto; 
-}
-
 #weekly-activities h3{
 	font-style:normal;
 	text-transform: uppercase;
 	text-align: right;
-	background-color: #466432;
-	color: white;
+	background-color: #B6D051;
+	color: #2F6D7A;
 	padding: 3px 5px 3px 0px;
 	margin-bottom: 0px;
 }
@@ -157,5 +152,31 @@ td.activity {
 	text-align: left;
 	border: 0px;
 	padding: 3px 10px 3px 10px;
+	color: #1B1E26;
+}
+
+#location-container {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+a.location-button {
+	font-size: 14px;
+	font-weight: bold;
+	background: #21759B url('images/button-grad.png') repeat-x scroll left top;
+	color: white;
+	padding: 6px 12px 6px 12px;
+	-moz-border-radius: 12px;
+	-khtml-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	text-shadow: rgba(0,0,0,0.3) 0 -1px 0;
+}
+
+a.location-button:hover {
+	border-color: #13455B;
+	color: #EAF2FA;
+	text-decoration: none;
 }
 
