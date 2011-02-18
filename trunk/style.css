@@ -39,6 +39,7 @@ body {
 	height: 73px;
 	display: block;
 	text-align: center;
+	line-height: 120px;
 }
 
 #site-description {
