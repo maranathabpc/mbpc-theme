@@ -57,10 +57,19 @@
 				<?php twentyten_posted_on(); ?>
 			</div><!-- .entry-meta -->
 
-			<div class="entry-meta">
+			<div class="entry-meta entry-meta-speaker">
 				<?php echo get_the_term_list(get_the_ID(), 'speaker', "Speaker: ") ?>
-			</div><!-- .entry-meta -->
+			</div><!-- .entry-meta-speaker -->
 
+			<div class="entry-meta entry-meta-theme">
+				<?php echo get_the_term_list(get_the_ID(), 'theme', "Theme: ") ?>
+			</div><!-- .entry-meta-theme-->
+
+			<div class="entry-meta entry-meta-scripture-text">
+				Scripture Text: 
+				<?php echo get_post_meta(get_the_ID(), 'Scripture Text', true); ?>
+			</div><!-- .entry-meta-scripture-text -->
+			
 			<div class="entry-content">
 				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>

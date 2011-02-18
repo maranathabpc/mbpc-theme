@@ -42,11 +42,13 @@ function mbpc_create_my_post_types() {
 							'rewrite'=>array('with_front'=>false)
 						)
 						);
+	add_post_type_support('sermon','custom-fields');
 }
 
 //register custom taxonomies
 add_action('init', 'mbpc_register_taxonomies');
 function mbpc_register_taxonomies() {
+	//speakers for sermons
 	register_taxonomy(
 		'speaker',
 		array('sermon'),
@@ -62,6 +64,27 @@ function mbpc_register_taxonomies() {
 						'add_new_item'=>__('Add New Speaker'),
 						'new_item_name'=>__('Name of New Speaker'),
 						'add_or_remove_items'=>__('Add or remove speakers')
+						),
+			'hierarchical'=>true
+			)
+		);
+
+	//themes for sermons
+	register_taxonomy(
+		'theme',
+		array('sermon'),
+		array(
+			'labels'=>array(
+						'name'=>__('Themes'),
+						'singular_name'=>__('Theme'),
+						'search_items'=>__('Search for Themes'),
+						'popular_items'=>__('Popular Themes'),
+						'all_items'=>__('All Themes'),
+						'edit_item'=>__('Edit Theme'),
+						'update_item'=>__('Update Theme'),
+						'add_new_item'=>__('Add New Theme'),
+						'new_item_name'=>__('Name of New Theme'),
+						'add_or_remove_items'=>__('Add or remove themes')
 						),
 			'hierarchical'=>true
 			)

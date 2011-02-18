@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying sermons from the speaker taxonomy.
+ * The template for displaying sermons from the theme taxonomy.
  *
  * @package WordPress
  * @subpackage Twenty_Ten
@@ -15,7 +15,7 @@ get_header(); ?>
 				<?php //$speaker_name = get_terms('speaker','fields=names&slug='.$term); 
 				$term = get_term_by('slug',get_query_var('term'),get_query_var('taxonomy'));?>
 				<h1 class="page-title"><?php
-				printf( __( 'Sermons by %s', 'twentyten' ), '<span>' . $term->name . '</span>' );
+				printf( __( 'Sermons with the theme %s', 'twentyten' ), '<span>' . $term->name . '</span>' );
 				?></h1>
 
 <?php
