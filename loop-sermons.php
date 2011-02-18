@@ -65,10 +65,14 @@
 				<?php echo get_the_term_list(get_the_ID(), 'theme', "Theme: ") ?>
 			</div><!-- .entry-meta-theme-->
 
+			<?php 
+			$scriptureText = get_post_meta(get_the_ID(), 'Scripture Text', true);
+			if($scriptureText != '') : ?>	
 			<div class="entry-meta entry-meta-scripture-text">
 				Scripture Text: 
-				<?php echo get_post_meta(get_the_ID(), 'Scripture Text', true); ?>
+				<?php echo $scriptureText; ?>
 			</div><!-- .entry-meta-scripture-text -->
+			<?php endif; ?>
 			
 			<div class="entry-content">
 				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
