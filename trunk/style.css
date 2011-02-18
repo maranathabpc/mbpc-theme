@@ -17,7 +17,7 @@ Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-backgr
 
 body {
 	font-family: 'Ubuntu', sans serif;
-	font-size: 13px;
+	font-size: 15px;
 	background-color: #F2EFBD;
 }
 
@@ -33,7 +33,7 @@ body {
 }
 
 #site-title a{
-	background:url('./images/MaranathaLogo.jpg') no-repeat 250px; 
+	background:url('./images/MaranathaLogo.jpg') no-repeat 240px; 
 	/*background-repeat: no-repeat;*/
 	color: white;
 	height: 73px;
@@ -76,6 +76,11 @@ body {
 	background-color: #B6D051;
 	width: 100%;
 /*	padding-right: 40px;*/
+}
+
+#access a{
+	color: #1B1E26;
+	font-size: 15px;
 }
 
 #nav-container {
