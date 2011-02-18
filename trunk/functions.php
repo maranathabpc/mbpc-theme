@@ -42,7 +42,7 @@ function mbpc_create_my_post_types() {
 							'rewrite'=>array('with_front'=>false)
 						)
 						);
-	add_post_type_support('sermon','custom-fields');
+	//add_post_type_support('sermon','custom-fields');
 }
 
 //register custom taxonomies
