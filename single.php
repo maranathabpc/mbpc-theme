@@ -47,9 +47,10 @@ get_header(); ?>
 						</div><!-- #author-description -->
 					</div><!-- #entry-author-info -->
 <?php endif; ?>
+				<!-- insert facebook like button -->	
+					<?php get_template_part('fblike');?>
 
-					<iframe src="http://www.facebook.com/plugins/like.php?href=<?php echo urlencode(get_permalink($post->ID)); ?>&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light" scrolling="no" frameborder="0" allowTransparency="true" style="border:none; overflow:hidden; width:450px; height:35px;"></iframe>
-					<div class="entry-utility">
+						<div class="entry-utility">
 						<?php twentyten_posted_in(); ?>
 						<?php edit_post_link( __( 'Edit', 'twentyten' ), '<span class="edit-link">', '</span>' ); ?>
 					</div><!-- .entry-utility -->
