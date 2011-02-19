@@ -226,7 +226,10 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 
 add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Sermon_Archives");'));
 
-//trying out the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
+//from the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
+/**************************************************************************************************************
+ * the code below is for the scripture text meta box for the Sermon admin interface
+ *************************************************************************************************************/
 
 $prefix = 'mbpc_scripture_text_';
 
@@ -341,4 +344,5 @@ function mbpcTheme_save_data($post_id) {
         }
     }
 }
+/*****  End code for scripture text meta box for sermon admin interface **********************/
 ?>
