@@ -66,7 +66,7 @@
 			</div><!-- .entry-meta-theme-->
 
 			<?php 
-			$scriptureText = get_post_meta(get_the_ID(), 'Scripture Text', true);
+			$scriptureText = get_post_meta(get_the_ID(), 'mbpc_scripture_text_text', true);
 			if($scriptureText != '') : ?>	
 			<div class="entry-meta entry-meta-scripture-text">
 				Scripture Text: 
