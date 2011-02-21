@@ -287,7 +287,7 @@ $meta_boxes[] = array(
         array(
             'name' => 'Scripture Reference',
             'desc' => 'Enter memory verse reference',
-            'id' => $prefix . 'mem_verse_text',
+            'id' => $prefix . 'mem_verse_ref_text',
             'type' => 'text',
             'std' => ''
         ),
