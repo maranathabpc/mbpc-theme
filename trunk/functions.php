@@ -250,124 +250,162 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Sermon_Archives");'));
 
 //from the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
+//new code is from the multiple meta box tutorial at http://www.deluxeblogtips.com/2010/05/howto-meta-box-wordpress.html
 /**************************************************************************************************************
- * the code below is for the scripture text meta box for the Sermon admin interface
+ *  the code below adds meta boxes for the sermon and newsletter post types
  *************************************************************************************************************/
 
-$prefix = 'mbpc_scripture_text_';
+$prefix = 'mbpc_';
+$meta_boxes = array();
 
-$meta_box = array(
+//meta box for scripture text in sermon custom post type
+$meta_boxes[] = array(
     'id' => 'scripture-text-meta',
     'title' => 'Scripture Text',
-    'page' => 'sermon',
+    'pages' => array('sermon'),
     'context' => 'normal',
     'priority' => 'high',
     'fields' => array(
         array(
             'name' => 'Scripture Text',
             'desc' => 'Enter scripture text for this sermon',
-            'id' => $prefix . 'text',
+            'id' => $prefix . 'scripture_text_text',
             'type' => 'text',
             'std' => ''
         )    
 	)
 );
 
+//meta box for memory verse in newsletter (Maranatha Messenger) post type
+$meta_boxes[] = array(
+    'id' => 'mem-verse-text-meta',
+    'title' => 'Memory Verse',
+    'pages' => array('newsletter'),
+    'context' => 'normal',
+    'priority' => 'high',
+    'fields' => array(
+        array(
+            'name' => 'Scripture Reference',
+            'desc' => 'Enter memory verse reference',
+            'id' => $prefix . 'mem_verse_text',
+            'type' => 'text',
+            'std' => ''
+        ),
+        array(
+            'name' => 'Verse Text',
+            'desc' => 'Enter full text of memory verse',
+            'id' => $prefix . 'mem_verse_textarea',
+            'type' => 'textarea',
+            'std' => ''
+        )
+	)
+);
 
-add_action('admin_menu', 'mbpcTheme_add_box');
-
-// Add meta box
-function mbpcTheme_add_box() {
-    global $meta_box;
-    
-    add_meta_box($meta_box['id'], $meta_box['title'], 'mbpcTheme_show_box', $meta_box['page'], $meta_box['context'], $meta_box['priority']);
+foreach($meta_boxes as $meta_box) {
+	$my_box = new My_meta_box($meta_box);
 }
 
+class My_meta_box {
 
-// Callback function to show fields in meta box
-function mbpcTheme_show_box() {
-    global $meta_box, $post;
-    
-    // Use nonce for verification
-    echo '<input type="hidden" name="mbpcTheme_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
-    
-    echo '<table class="form-table">';
+    protected $_meta_box;
 
-    foreach ($meta_box['fields'] as $field) {
-        // get current post meta data
-        $meta = get_post_meta($post->ID, $field['id'], true);
-        
-        echo '<tr>',
-                '<th style="width:20%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
-                '<td>';
-        switch ($field['type']) {
-            case 'text':
-                echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="30" style="width:97%" />', '<br />', $field['desc'];
-                break;
-            case 'textarea':
-                echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>', '<br />', $field['desc'];
-                break;
-            case 'select':
-                echo '<select name="', $field['id'], '" id="', $field['id'], '">';
-                foreach ($field['options'] as $option) {
-                    echo '<option', $meta == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-                }
-                echo '</select>';
-                break;
-            case 'radio':
-                foreach ($field['options'] as $option) {
-                    echo '<input type="radio" name="', $field['id'], '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', $option['name'];
-                }
-                break;
-            case 'checkbox':
-                echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
-                break;
+    // create meta box based on given data
+    function __construct($meta_box) {
+        $this->_meta_box = $meta_box;
+        add_action('admin_menu', array(&$this, 'add'));
+
+        add_action('save_post', array(&$this, 'save'));
+    }
+
+    /// Add meta box for multiple post types
+    function add() {
+        foreach ($this->_meta_box['pages'] as $page) {
+            add_meta_box($this->_meta_box['id'], $this->_meta_box['title'], array(&$this, 'show'), $page, $this->_meta_box['context'], $this->_meta_box['priority']);
         }
-        echo     '<td>',
-            '</tr>';
     }
+
+    // Callback function to show fields in meta box
+    function show() {
+        global $post;
+
+        // Use nonce for verification
+        echo '<input type="hidden" name="mbpcTheme_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
     
-    echo '</table>';
-}
+        echo '<table class="form-table">';
 
-
-add_action('save_post', 'mbpcTheme_save_data');
-
-// Save data from meta box
-function mbpcTheme_save_data($post_id) {
-    global $meta_box;
+        foreach ($this->_meta_box['fields'] as $field) {
+            // get current post meta data
+            $meta = get_post_meta($post->ID, $field['id'], true);
+        
+            echo '<tr>',
+                    '<th style="width:20%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
+                    '<td>';
+            switch ($field['type']) {
+                case 'text':
+                    echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="30" style="width:97%" />',
+                        '<br />', $field['desc'];
+                    break;
+                case 'textarea':
+                    echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>',
+                        '<br />', $field['desc'];
+                    break;
+                case 'select':
+                    echo '<select name="', $field['id'], '" id="', $field['id'], '">';
+                    foreach ($field['options'] as $option) {
+                        echo '<option', $meta == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+                    }
+                    echo '</select>';
+                    break;
+                case 'radio':
+                    foreach ($field['options'] as $option) {
+                        echo '<input type="radio" name="', $field['id'], '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', $option['name'];
+                    }
+                    break;
+                case 'checkbox':
+                    echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
+                    break;
+            }
+            echo     '<td>',
+                '</tr>';
+        }
     
-    // verify nonce
-    if (!wp_verify_nonce($_POST['mbpcTheme_meta_box_nonce'], basename(__FILE__))) {
-        return $post_id;
+        echo '</table>';
     }
 
-    // check autosave
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return $post_id;
-    }
-
-    // check permissions
-    if ('page' == $_POST['post_type']) {
-        if (!current_user_can('edit_page', $post_id)) {
+    // Save data from meta box
+    function save($post_id) {
+        // verify nonce
+        if (!wp_verify_nonce($_POST['mbpcTheme_meta_box_nonce'], basename(__FILE__))) {
             return $post_id;
         }
-    } elseif (!current_user_can('edit_post', $post_id)) {
-        return $post_id;
-    }
+
+        // check autosave
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return $post_id;
+        }
+
+        // check permissions
+        if ('page' == $_POST['post_type']) {
+            if (!current_user_can('edit_page', $post_id)) {
+                return $post_id;
+            }
+        } elseif (!current_user_can('edit_post', $post_id)) {
+            return $post_id;
+        }
+
+        foreach ($this->_meta_box['fields'] as $field) {
+            $old = get_post_meta($post_id, $field['id'], true);
+            $new = $_POST[$field['id']];
     
-    foreach ($meta_box['fields'] as $field) {
-        $old = get_post_meta($post_id, $field['id'], true);
-        $new = $_POST[$field['id']];
-        
-        if ($new && $new != $old) {
-            update_post_meta($post_id, $field['id'], $new);
-        } elseif ('' == $new && $old) {
-            delete_post_meta($post_id, $field['id'], $old);
+            if ($new && $new != $old) {
+                update_post_meta($post_id, $field['id'], $new);
+            } elseif ('' == $new && $old) {
+                delete_post_meta($post_id, $field['id'], $old);
+            }
         }
     }
 }
-/*****  End code for scripture text meta box for sermon admin interface **********************/
+/*****  End code for meta boxes **********************/
 
 /**
  * Categories/Taxonomies widget class
