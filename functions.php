@@ -189,11 +189,11 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
  * Pre-reqs: Custom Post Type Plugin, sermon custom post type (declared above)
  * @since 3.0.5
  */
-class WP_Widget_Sermon_Archives extends WP_Widget {
+class WP_Widget_Custom_Post_Type_Archives extends WP_Widget {
 
-	function WP_Widget_Sermon_Archives() {
-		$widget_ops = array('classname' => 'widget_sermon_archive', 'description' => __( 'A monthly archive of your site&#8217;s sermons') );
-		$this->WP_Widget('sermon_archives', __('Sermon Archives'), $widget_ops);
+	function WP_Widget_Custom_Post_Type_Archives() {
+		$widget_ops = array('classname' => 'widget_custom_post_type_archive', 'description' => __( 'A monthly archive of your specified post type') );
+		$this->WP_Widget('custom_post_type_archives', __('Custom Post Type Archives'), $widget_ops);
 	}
 
 	function widget( $args, $instance ) {
@@ -201,6 +201,7 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 		$c = $instance['count'] ? '1' : '0';
 		$d = $instance['dropdown'] ? '1' : '0';
 		$title = apply_filters('widget_title', empty($instance['title']) ? __('Sermon Archives') : $instance['title'], $instance, $this->id_base);
+		$post_type = $instance['posttype'];
 
 		echo $before_widget;
 		if ( $title )
@@ -208,12 +209,12 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 
 		if ( $d ) {
 ?>
-		<select name="sermon-archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value=""><?php echo esc_attr(__('Select Month')); ?></option> <?php mbpc_get_post_type_archives('sermon',apply_filters('widget_sermon_archives_dropdown_args', array('type' => 'monthly', 'format' => 'option', 'show_post_count' => $c))); ?> </select>
+		<select name="custom-post-type-archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'> <option value=""><?php echo esc_attr(__('Select Month')); ?></option> <?php mbpc_get_post_type_archives($post_type,apply_filters('widget_custom_post_type_archives_dropdown_args', array('type' => 'monthly', 'format' => 'option', 'show_post_count' => $c))); ?> </select>
 <?php
 		} else {
 ?>
 		<ul>
-		<?php mbpc_get_post_type_archives('sermon',apply_filters('widget_sermon_archives_args', array('type' => 'monthly', 'show_post_count' => $c))); ?>
+		<?php mbpc_get_post_type_archives($post_type,apply_filters('widget_custom_post_type_archives_args', array('type' => 'monthly', 'show_post_count' => $c))); ?>
 		</ul>
 <?php
 		}
@@ -223,8 +224,9 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-		$new_instance = wp_parse_args( (array) $new_instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
+		$new_instance = wp_parse_args( (array) $new_instance, array( 'title' => '', 'count' => 0, 'dropdown' => '','posttype' => '') );
 		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['posttype'] = strip_tags($new_instance['posttype']);
 		$instance['count'] = $new_instance['count'] ? 1 : 0;
 		$instance['dropdown'] = $new_instance['dropdown'] ? 1 : 0;
 
@@ -232,12 +234,15 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '') );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'count' => 0, 'dropdown' => '', 'posttype' => '') );
 		$title = strip_tags($instance['title']);
+		$post_type = strip_tags($instance['posttype']);
 		$count = $instance['count'] ? 'checked="checked"' : '';
 		$dropdown = $instance['dropdown'] ? 'checked="checked"' : '';
 ?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /></p>
+
+		<p><label for="<?php echo $this->get_field_id('posttype'); ?>"><?php _e('Custom Post Type:'); ?></label> <input class="widefat" id="<?php echo $this->get_field_id('posttype'); ?>" name="<?php echo $this->get_field_name('posttype'); ?>" type="text" value="<?php echo esc_attr($post_type); ?>" /></p>
 		<p>
 			<input class="checkbox" type="checkbox" <?php echo $count; ?> id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" /> <label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Show post counts'); ?></label>
 			<br />
@@ -247,7 +252,7 @@ class WP_Widget_Sermon_Archives extends WP_Widget {
 	}
 }
 
-add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Sermon_Archives");'));
+add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Custom_Post_Type_Archives");'));
 
 //from the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
 //new code is from the multiple meta box tutorial at http://www.deluxeblogtips.com/2010/05/howto-meta-box-wordpress.html
