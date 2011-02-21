@@ -36,13 +36,35 @@ function mbpc_create_my_post_types() {
 										'search_items'=>__('Search Sermons'),
 										'not_found'=>__('No sermons found'),
 										'not_found_in_trash'=>__('No sermons found in trash')),
-							'description'=>__('Contains a link to the recording of the sermon as well as the text of the sermon summary'),
+							'description'=>__('Contains a link to the recording of the sermon as well as the sermon summary'),
 							'public'=>true,
 							'menu_position'=>5,
 							'rewrite'=>array('with_front'=>false)
 						)
 						);
-	//add_post_type_support('sermon','custom-fields');
+
+	register_post_type('newsletter',
+						array(
+							'labels'=>array(
+										'name'=>__('Maranatha Messengers'),
+										'singular_name'=>__('Maranatha Messenger'),
+										'add_new'=>__('Add New'),
+										'add_new_item'=>__('Add New Maranatha Messenger'),
+										'edit'=>__('Edit'),
+										'edit_item'=>__('Edit Maranatha Messenger'),
+										'new_item'=>__('New Maranatha Messenger'),
+										'view_item'=>__('View the Maranatha Messenger'),
+										'search_items'=>__('Search Maranatha Messengers'),
+										'not_found'=>__('No Maranatha Messengers found'),
+										'not_found_in_trash'=>__('No weeklies found in trash')),
+							'description'=>__('Download link for the Maranatha Messenger'),
+							'public'=>true,
+							'menu_position'=>6,
+							'rewrite'=>array('with_front'=>false),
+							'taxonomies' => array('category')		//allows newsletter post type to use default categories
+						)
+						);
+
 }
 
 //register custom taxonomies
@@ -106,6 +128,7 @@ function twentyten_posted_on() {
 
 //add_filter('getarchives_where','mbpc_getarchives_where_filter',10,2);
 
+//currently not used
 function mbpc_getarchives_where_filter($where, $r) {
 	$args = array(
 		'public' => true,
