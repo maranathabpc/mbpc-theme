@@ -21,7 +21,7 @@ if(isset($existing['pagename']))
 //there should only be 4 or 5 newsletters/mth, so no need to limit the posts per page
 //in WP 3.0.5, pagination doesn't work for custom post type archives even with the plugin
 else
-	$args = array_merge($wp_query->query,array('post_type'=>'newsletters','paged'=>get_query_var('paged')));
+	$args = array_merge($wp_query->query,array('post_type'=>'newsletter','paged'=>get_query_var('paged')));
 query_posts($args);
 ?>
 
