@@ -45,7 +45,7 @@
 
 	//redirects search page to google custom search result
 	if(is_search()) {
-		$result_url = 'https://cosine.dyndns-ip.com/mbpc/search/?cx=004747598253915007065:he2ysjuzafw&cof=FORID:10&ie=UTF-8&sa=Search&siteurl=cosine.dyndns-ip.com%2Fmbpc%2F&q=';
+		$result_url = 'http://maranatha-bpc.com/search/?cx=004747598253915007065:he2ysjuzafw&cof=FORID:10&ie=UTF-8&sa=Search&siteurl=maranatha-bpc.com%2F&q=';
 		header('Location:'.$result_url.$s);
 		exit;
 	}
@@ -83,7 +83,7 @@
 				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 				<!-- add google custom search box -->
 				<div id="search">
-				<form action="https://cosine.dyndns-ip.com/mbpc/search" id="cse-search-box">
+				<form action="http://maranatha-bpc.com/search" id="cse-search-box">
 					<div>
 						<input type="hidden" name="cx" value="004747598253915007065:he2ysjuzafw" />
 						<input type="hidden" name="cof" value="FORID:10" />
