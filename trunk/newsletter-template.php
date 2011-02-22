@@ -14,7 +14,7 @@
 global $wp_query;
 $existing = $wp_query->query;
 
-//if on sermons display page, change the whole query
+//if on newsletter display page, change the whole query
 if(isset($existing['pagename']))
 	$args = array('post_type'=>'newsletter','posts_per_page'=>5,'paged'=>get_query_var('paged'));
 //if it's a date archive, add the parameters on to the existing query with the month/yr info
