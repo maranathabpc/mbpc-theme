@@ -2,8 +2,8 @@
 /**
  * The loop that displays newsletters.
  *
- * Overrides the default loop. Called with get_template_part('loop','newsltters')
- * in sermon-template.php
+ * Overrides the default loop. Called with get_template_part('loop','newsletters')
+ * in newsletter-template.php
  *
  * @package WordPress
  * @subpackage Twenty_Ten

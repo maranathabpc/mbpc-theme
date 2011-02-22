@@ -1,4 +1,36 @@
 <?php
+//remove action hook for twentyten widget areas
+remove_action('widgets_init','twentyten_widgets_init');
+
+function mbpc_widgets_init() {
+	twentyten_widgets_init();
+
+	// Area 3, will show up when certain conditions are met, see sidebar.php 
+	register_sidebar( array(
+		'name' => __( 'Third Widget Area', 'twentyten' ),
+		'id' => 'third-widget-area',
+		'description' => __( 'The third widget area', 'twentyten' ),
+		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
+		'after_widget' => '</li>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	// Area 4, will show up when certain conditions are met, see sidebar.php 
+	register_sidebar( array(
+		'name' => __( 'Fourth Widget Area', 'twentyten' ),
+		'id' => 'fourth-widget-area',
+		'description' => __( 'The fourth widget area', 'twentyten' ),
+		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
+		'after_widget' => '</li>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+}
+
+add_action('widgets_init','mbpc_widgets_init');
+
 
 //show home page in Wordpress Menu administration
 function home_page_menu_args($args) {

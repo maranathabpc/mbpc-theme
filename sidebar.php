@@ -49,7 +49,7 @@
 			</ul>
 		</div><!-- #primary .widget-area -->
 
-<?php else :
+<?php elseif(is_post_type_archive('newsletter') || is_category() || is_page_template('newsletter-template.php')) :
 	// A second sidebar for widgets, just because.
 	if ( is_active_sidebar( 'secondary-widget-area' ) ) : ?>
 
@@ -59,5 +59,25 @@
 			</ul>
 		</div><!-- #secondary .widget-area -->
 
-<?php endif; ?>
+<?php endif; //end secondary widget area ?>
+
+<?php elseif(is_page()) :
+	//Third widget area, for pages
+	if(is_active_sidebar('third-widget-area')) : ?>
+		<div id="third-widget-area" class="widget-area" role="complementary">
+			<ul class="xoxo">
+				<?php dynamic_sidebar('third-widget-area'); ?>
+			</ul>
+		</div><!-- #third-widget .widget-area -->
+<?php endif;  //end third widget area ?>
+
+<?php else :
+	//Fourth widget area, for posts
+	if(is_active_sidebar('fourth-widget-area')) : ?>
+		<div id="fourth-widget-area" class="widget-area" role="complementary">
+			<ul class="xoxo">
+				<?php dynamic_sidebar('fourth-widget-area'); ?>
+			</ul>
+		</div><!-- #fourth-widget .widget-area -->
+<?php endif;  //end fourth widget area ?>
 <?php endif; ?>

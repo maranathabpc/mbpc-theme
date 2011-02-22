@@ -195,3 +195,9 @@ a.location-button:hover {
 	text-decoration: none;
 }
 
+/*Third and Fourth sidebars*/
+#third-widget-area, #fourth-widget-area {
+	width: 220px;
+	float: right;
+}
+
