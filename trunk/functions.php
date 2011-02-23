@@ -51,6 +51,14 @@ function ubuntu_font() {
 <?php
 }
 
+//register shortcode for year
+function mbpc_year() {
+	return '<span class="the-year">' . date( 'Y' ) . '</span>';
+}
+add_shortcode('the-year', 'mbpc_year');
+//allow shortcodes to be used in text widgets
+add_filter('widget_text', 'do_shortcode');
+
 //register custom post types
 add_action('init', 'mbpc_create_my_post_types');
 function mbpc_create_my_post_types() {
