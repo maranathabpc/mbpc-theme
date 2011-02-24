@@ -79,6 +79,7 @@ function mbpc_create_my_post_types() {
 							'description'=>__('Contains a link to the recording of the sermon as well as the sermon summary'),
 							'public'=>true,
 							'menu_position'=>5,
+							'has_archive' => true,
 							'rewrite'=>array('with_front'=>false)
 						)
 						);
@@ -101,6 +102,7 @@ function mbpc_create_my_post_types() {
 							'public'=>true,
 							'menu_position'=>6,
 							'rewrite'=>array('with_front'=>false),
+							'has_archive' => true,
 							'taxonomies' => array('category')		//allows newsletter post type to use default categories
 						)
 						);
@@ -185,6 +187,31 @@ function mbpc_getarchives_where_filter($where, $r) {
 }
 
 /**
+ * Originally from the Custom Post Types plugin
+ * Hooks into 'getarchives_where' filter to change the WHERE constraint to support post type filtering.
+ * Will replace "post_type = 'post'" with "post_type = '{POST_TYPE}'". 
+ * That part will be removed if 'post_type' in $options is set to 'all'.
+ * @param string $where the WHERE constraint
+ * @param array $options options that are passed to the 'wp_get_archives' function
+ * @return string the modified (or not) WHERE constraint
+ */
+function pta_wp_get_archives_filter($where, $options) {
+	if(!isset($options['post_type'])) return $where; // OK - this is regular wp_get_archives call - don't do anything
+	
+	global $wpdb; // get the DB engine
+	
+	$post_type = $wpdb->escape($options['post_type']); // escape the passed value to be SQL safe
+	if($post_type == 'all') $post_type = ''; // if we want to have archives for all post types
+	else $post_type = "post_type = '$post_type' AND"; // otherwise just for specific one
+	
+	$where = str_replace('post_type = \'post\' AND', $post_type, $where);
+	
+	return $where;
+}
+add_filter('getarchives_where', 'pta_wp_get_archives_filter', 10, 2);
+
+
+/**
  * This function is a wrapper for 'wp_get_archives' function to support post type filtering.
  * It's necessary to have this function so that the links could be fixed to link to proper archives.
  * This needs to be done here, because WordPress lacks hooks in 'wp_get_archives' function.
@@ -210,7 +237,7 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	
 	if($post_type != 'all' and $type != 'postbypost' and $type != 'alpha') {
 		$pattern = 'href=\'' . get_bloginfo('url') . '/blog/';
-		$replacement = 'href=\'' . get_the_post_type_permalink($post_type);
+		$replacement = 'href=\'' . get_bloginfo('url') . '/' . $post_type .'/';
 		
 		$html = str_replace($pattern, $replacement, $html);
 	}

@@ -226,6 +226,7 @@ h2,
 h3, 
 #content .entry-title, 
 .widget-title, 
+.page-title,
 #site-title {
 	font-family: 'Georgia', 'Times New Roman', serif;
 	margin-bottom: 8px;
