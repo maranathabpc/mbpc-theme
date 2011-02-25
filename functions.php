@@ -80,6 +80,8 @@ function mbpc_create_my_post_types() {
 							'public'=>true,
 							'menu_position'=>5,
 							'has_archive' => true,
+							'capability_type' => 'sermon',
+							'map_meta_cap' => true,
 							'rewrite'=>array('with_front'=>false)
 						)
 						);
@@ -103,11 +105,15 @@ function mbpc_create_my_post_types() {
 							'menu_position'=>6,
 							'rewrite'=>array('with_front'=>false),
 							'has_archive' => true,
+							'capability_type' => 'newsletter',
+							'map_meta_cap' => true,
 							'taxonomies' => array('category')		//allows newsletter post type to use default categories
 						)
 						);
 
 }
+
+
 
 //register custom taxonomies
 add_action('init', 'mbpc_register_taxonomies');
@@ -129,7 +135,8 @@ function mbpc_register_taxonomies() {
 						'new_item_name'=>__('Name of New Speaker'),
 						'add_or_remove_items'=>__('Add or remove speakers')
 						),
-			'hierarchical'=>true
+			'hierarchical'=>true,
+			'capabilities' => array('assign_terms' => 'edit_sermons')
 			)
 		);
 
@@ -150,11 +157,35 @@ function mbpc_register_taxonomies() {
 						'new_item_name'=>__('Name of New Theme'),
 						'add_or_remove_items'=>__('Add or remove themes')
 						),
-			'hierarchical'=>true
+			'hierarchical'=>true,
+			//allows custom role to assign taxonomy terms when given the capablity to edit it
+			'capabilities' => array('assign_terms' => 'edit_sermons')
 			)
 		);
 
 }
+
+/* remove menu items for church_cm role
+ * assumes 'edit_sermons' capability only belongs to church_cm
+ * and 'update_core' will only be given to admin.
+ * this removes the Posts section from the menu.
+*/
+function mbpc_remove_menu_items() {
+	if ( current_user_can( 'edit_sermons' ) && !current_user_can( 'update_core') ) {
+
+		global $menu;
+		$restricted = array(__('Posts'));
+		end ($menu);
+		while (prev($menu)){
+			$value = explode(' ',$menu[key($menu)][0]);
+			if(in_array($value[0] != NULL?$value[0]:"" , $restricted)) {
+				unset($menu[key($menu)]);
+			}
+		}
+	}
+}
+
+add_action('admin_menu', 'mbpc_remove_menu_items');
 
 //override the posted on function in the parent theme because we don't want the author name
 function twentyten_posted_on() {
