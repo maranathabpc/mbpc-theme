@@ -33,14 +33,15 @@ body {
 	text-align: center;
 }
 
-#site-title a{
-	background:url('./images/MaranathaLogo.jpg') no-repeat 230px; 
+#site-title a {
+	text-align: center;
+}
+
+#site-title div {
+	background:url('./images/MaranathaLogo.jpg') no-repeat; 
 	/*background-repeat: no-repeat;*/
 	color: white;
-	height: 92px;
-	display: block;
-	text-align: center;
-	line-height: 140px;
+	line-height: 100px;
 }
 
 #site-description {
