@@ -202,12 +202,17 @@ a.location-button:hover {
 }
 /* End frontpage sidebar */
 
-/*meta styes */
+/*meta styles */
 .entry-meta {
 	font-size: 0.9em;
 	font-family: 'Ubuntu','Verdana', san serif;
 }
 
+.entry-meta-memVerseRef {
+	text-align: right;
+	padding-right: 48px;
+	padding-top: 8px;
+}
 
 /*Third and Fourth sidebars*/
 #third-widget-area, #fourth-widget-area {
