@@ -217,6 +217,36 @@ function mbpc_getarchives_where_filter($where, $r) {
 	return str_replace("post_type = 'post'", "post_type IN ($post_types)", $where);
 }
 
+
+/*
+ * Adapted from Custom Post Types plugin
+ * Need to add rewrite rules for the custom post types so the permalink
+ * shows as site.com/{post-type}/{year}/{month}/
+ */
+
+function mbpc_register_post_type_rewrite_rules($wp_rewrite) {
+
+	$args = array('public' => true, '_builtin' => false);	//get all public custom post types
+	$output = 'names';
+	$operator = 'and';
+	$post_types = get_post_types($args,$output,$operator);
+
+	$url_base = ($url_base == '') ? $url_base : $url_base . '/';
+	$custom_rules = array();
+
+	$post_types = implode('|', $post_types);
+		$custom_rules = array( "$url_base($post_types)/([0-9]+)/([0-9]{1,2})/?$"  =>
+				'index.php?post_type_index=1&post_type=' . $wp_rewrite->preg_index(1) . '&year=' . $wp_rewrite->preg_index(2) . '&monthnum=' . $wp_rewrite->preg_index(3)
+							);
+
+	$wp_rewrite->rules = array_merge($custom_rules, $wp_rewrite->rules); // merge existing rules with custom ones
+	
+	return $wp_rewrite;
+}
+
+add_filter('generate_rewrite_rules', 'mbpc_register_post_type_rewrite_rules', 100);
+
+
 /**
  * Originally from the Custom Post Types plugin
  * Hooks into 'getarchives_where' filter to change the WHERE constraint to support post type filtering.
