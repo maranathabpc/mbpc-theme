@@ -235,8 +235,13 @@ function mbpc_register_post_type_rewrite_rules($wp_rewrite) {
 	$custom_rules = array();
 
 	$post_types = implode('|', $post_types);
-		$custom_rules = array( "$url_base($post_types)/([0-9]+)/([0-9]{1,2})/?$"  =>
-				'index.php?post_type_index=1&post_type=' . $wp_rewrite->preg_index(1) . '&year=' . $wp_rewrite->preg_index(2) . '&monthnum=' . $wp_rewrite->preg_index(3)
+		$custom_rules = array( "$url_base($post_types)/([0-9]+)/([0-9]{1,2})/([0-9]{1,2})/?$" =>
+				'index.php?post_type_index=1&post_type=' . $wp_rewrite->preg_index(1) . '&year=' . $wp_rewrite->preg_index(2) . '&monthnum=' . $wp_rewrite->preg_index(3) . '&day=' . $wp_rewrite->preg_index(4),		//year month day
+
+								"$url_base($post_types)/([0-9]+)/([0-9]{1,2})/?$"  =>
+				'index.php?post_type_index=1&post_type=' . $wp_rewrite->preg_index(1) . '&year=' . $wp_rewrite->preg_index(2) . '&monthnum=' . $wp_rewrite->preg_index(3),			//year month
+								"$url_base($post_types)/([0-9]+)/?$" =>
+				'index.php?post_type_index=1&post_type=' . $wp_rewrite->preg_index(1) . '&year=' . $wp_rewrite->preg_index(2)	//year
 							);
 
 	$wp_rewrite->rules = array_merge($custom_rules, $wp_rewrite->rules); // merge existing rules with custom ones
