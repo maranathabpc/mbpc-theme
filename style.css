@@ -64,7 +64,7 @@ body {
 
 #header {
 	background-color: #2F6D7A;
-	overflow: auto;
+	height: 100%;
 	color: white;
 	/*padding: 0px 20px 0 0px;/**/
 	width: 100%;
@@ -72,6 +72,10 @@ body {
 	left: -20px;
 	/*padding-right: 40px;*/
 	top: -20px;
+}
+
+#branding {
+	height: 144px;
 }
 
 #access {
