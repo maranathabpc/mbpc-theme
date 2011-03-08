@@ -185,10 +185,13 @@ function mbpc_remove_menu_items() {
 	}
 
 	//hide sermons and newsletters from blogger
-	if ( current_user_can( 'edit_posts' ) && !current_user_can( 'edit_others_posts') ) {
+	if ( current_user_can( 'edit_posts' ) && !current_user_can( 'edit_others_posts') && !current_user_can( 'edit_sermons' )) {
 
 		global $menu;
-		$restricted = array(__('Sermons'), __('Maranatha Messengers'));
+
+		//don't use full name for Maranatha Messengers because the explode function later
+		//will mess things up. Thus only the 1st word is necesssary.
+		$restricted = array(__('Sermons'), __('Maranatha'), __('Tools'), __('Links'));
 		end ($menu);
 		while (prev($menu)){
 			$value = explode(' ',$menu[key($menu)][0]);
