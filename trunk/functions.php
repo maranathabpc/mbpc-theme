@@ -166,12 +166,12 @@ function mbpc_register_taxonomies() {
 }
 
 /* remove menu items for church_cm role
- * assumes 'edit_sermons' capability only belongs to church_cm
+ * assumes 'edit_others_sermons' capability only belongs to church_cm
  * and 'update_core' will only be given to admin.
  * this removes the Posts section from the menu.
 */
 function mbpc_remove_menu_items() {
-	if ( current_user_can( 'edit_sermons' ) && !current_user_can( 'update_core') ) {
+	if ( current_user_can( 'edit_others_sermons' ) && !current_user_can( 'update_core') ) {
 
 		global $menu;
 		$restricted = array(__('Posts'));
@@ -183,6 +183,21 @@ function mbpc_remove_menu_items() {
 			}
 		}
 	}
+
+	//hide sermons and newsletters from blogger
+	if ( current_user_can( 'edit_posts' ) && !current_user_can( 'edit_others_posts') ) {
+
+		global $menu;
+		$restricted = array(__('Sermons'), __('Maranatha Messengers'));
+		end ($menu);
+		while (prev($menu)){
+			$value = explode(' ',$menu[key($menu)][0]);
+			if(in_array($value[0] != NULL?$value[0]:"" , $restricted)) {
+				unset($menu[key($menu)]);
+			}
+		}
+	}
+
 }
 
 add_action('admin_menu', 'mbpc_remove_menu_items');
