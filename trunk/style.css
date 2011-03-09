@@ -98,8 +98,21 @@ body {
 	font-family: 'Ubuntu', 'Verdana', sans serif;
 }
 
+/*in nested menus, controls unselected parent item*/
+#access li:hover > a,
+#access ul ul :hover > a {
+	background: #70A99A;
+	color: #fff;
+}
+
+/*in nested menus, controls selected item*/
 #menu-main .menu-item a:hover {
 	background-color: #70A99A;
+}
+
+/*in nested menus, controls child item*/
+#access ul ul a {
+	background-color: #B6D051;
 }
 
 /*hide title on main page*/
