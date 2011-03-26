@@ -568,6 +568,14 @@ class My_meta_box {
                     echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
                     break;
 				case 'file':
+					$children = get_children(array('post_parent' => $post->ID, 'post_type' => 'attachment'));
+					if($children) {
+						echo 'Currently attached: <br/>';
+						foreach ($children as $child) {		//there should only be 1 child anyway
+							echo '<a href=\'' . $child->guid . '\'>' . $child->guid . '</a><br />';
+						}
+						echo '<br/>';
+					}
 					echo $meta ? "$meta<br />" : '', '<input type="file" name="', $field['id'], '" id="', $field['id'], '" />',
 						 '<br />', $field['desc'];
 					break;
