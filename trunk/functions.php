@@ -107,7 +107,8 @@ function mbpc_create_my_post_types() {
 							'has_archive' => true,
 							'capability_type' => 'newsletter',
 							'map_meta_cap' => true,
-							'taxonomies' => array('category')		//allows newsletter post type to use default categories
+							'taxonomies' => array('category'),		//allows newsletter post type to use default categories
+							'supports' => array('title')			//so the editor window isn't show
 						)
 						);
 
@@ -337,7 +338,7 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
  * Archives widget class
  * Modified to use sermon custom post type
  *
- * Pre-reqs: Custom Post Type Plugin, sermon custom post type (declared above)
+ * Pre-reqs: Custom Post Type Plugin, any post type (declared above)
  * @since 3.0.5
  */
 class WP_Widget_Custom_Post_Type_Archives extends WP_Widget {
@@ -432,6 +433,24 @@ $meta_boxes[] = array(
 	)
 );
 
+//meta box for uploading the newsletter (Maranatha Messenger)
+$meta_boxes[] = array(
+	'id' => 'newsletter-upload',
+	'title' => 'Newsletter Upload',
+	'pages' => array('newsletter'),
+	'context' => 'normal',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'Newsletter Upload',
+			'desc' => 'Select the MM to upload',
+			'id' => $prefix . 'newsletter_file',
+			'type' => 'file',
+			'std' => ''
+		)
+	)
+);
+
 //meta box for memory verse in newsletter (Maranatha Messenger) post type
 $meta_boxes[] = array(
     'id' => 'mem-verse-text-meta',
@@ -457,6 +476,7 @@ $meta_boxes[] = array(
 	)
 );
 
+
 foreach($meta_boxes as $meta_box) {
 	$my_box = new My_meta_box($meta_box);
 }
@@ -468,14 +488,41 @@ class My_meta_box {
     // create meta box based on given data
     function __construct($meta_box) {
         $this->_meta_box = $meta_box;
-        add_action('admin_menu', array(&$this, 'add'));
+		
+		// fix upload bug: http://www.hashbangcode.com/blog/add-enctype-wordpress-post-and-page-forms-471.html
+		$upload = false;
+		foreach ($meta_box['fields'] as $field) {
+			if ($field['type'] == 'file' || $field['type'] == 'image') {		//no support in the rest of this code for images
+				$upload = true;
+				break;
+			}
+		}
+		$current_page = substr(strrchr($_SERVER['PHP_SELF'], '/'), 1, -4);
+		if ($upload && ($current_page == 'page' || $current_page == 'page-new' || $current_page == 'post' || $current_page == 'post-new')) {
+			add_action('admin_head', array(&$this, 'add_post_enctype'));
+		}
 
+		add_action('admin_menu', array(&$this, 'add'));
         add_action('save_post', array(&$this, 'save'));
     }
 
+	function add_post_enctype() {
+		echo '
+			<script type="text/javascript">
+			jQuery(document).ready(function(){
+					jQuery("#post").attr("enctype", "multipart/form-data");
+					jQuery("#post").attr("encoding", "multipart/form-data");
+					});
+		</script>';
+	}
+
     /// Add meta box for multiple post types
     function add() {
-        foreach ($this->_meta_box['pages'] as $page) {
+		//sets context and priority if left unset in metabox declarations
+		$this->_meta_box['context'] = empty($this->_meta_box['context']) ? 'normal' : $this->_meta_box['context'];
+		$this->_meta_box['priority'] = empty($this->_meta_box['priority']) ? 'high' : $this->_meta_box['priority'];
+
+		foreach ($this->_meta_box['pages'] as $page) {
             add_meta_box($this->_meta_box['id'], $this->_meta_box['title'], array(&$this, 'show'), $page, $this->_meta_box['context'], $this->_meta_box['priority']);
         }
     }
@@ -520,6 +567,10 @@ class My_meta_box {
                 case 'checkbox':
                     echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
                     break;
+				case 'file':
+					echo $meta ? "$meta<br />" : '', '<input type="file" name="', $field['id'], '" id="', $field['id'], '" />',
+						 '<br />', $field['desc'];
+					break;
             }
             echo     '<td>',
                 '</tr>';
@@ -550,18 +601,99 @@ class My_meta_box {
         }
 
         foreach ($this->_meta_box['fields'] as $field) {
+			$name = $field['id'];
+
             $old = get_post_meta($post_id, $field['id'], true);
             $new = $_POST[$field['id']];
-    
-            if ($new && $new != $old) {
+
+			if ($field['type'] == 'file' || $field['type'] == 'image') {
+				if (!empty($_FILES[$name])) {
+					$this->fix_file_array($_FILES[$name]);
+					foreach ($_FILES[$name] as $position => $fileitem) {
+						$file = wp_handle_upload($_FILES[$name], array('test_form' => false));
+						$filename = $file['url'];
+						if (!empty($filename)) {
+							$currPost = get_post($post_id);
+
+							//unattach current attachment, if any
+							$children = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment'));
+							if($children) {
+								foreach($children as $child) {
+									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0));
+								}
+							}
+
+							//attach attachment post to the main parent post
+							$wp_filetype = wp_check_filetype(basename($filename), null);
+							$attachment = array(
+									'post_mime_type' => $wp_filetype['type'],
+								//	'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+									'post_status' => 'inherit',
+									'guid' => $filename,
+									'post_title' => $currPost -> post_title
+									);
+							$attach_id = wp_insert_attachment($attachment, $filename, $post_id);
+							// you must first include the image.php file
+							// for the function wp_generate_attachment_metadata() to work
+							require_once(ABSPATH . 'wp-admin/includes/image.php');
+							$attach_data = wp_generate_attachment_metadata($attach_id, $filename);
+							wp_update_attachment_metadata($attach_id, $attach_data);
+
+							//update post content with the download text and link to the file
+							$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
+							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+						}
+					}
+				}
+			}
+   	
+            if ($new && $new != $old /*&& $field['type'] != 'file'*/) {
                 update_post_meta($post_id, $field['id'], $new);
-            } elseif ('' == $new && $old) {
+            } elseif ('' == $new && $old && $field['type'] != 'file' && $field['type'] != 'image') {
                 delete_post_meta($post_id, $field['id'], $old);
             }
         }
     }
+
+
+	/**
+	 * Fixes the odd indexing of multiple file uploads from the format:
+	 *
+	 * $_FILES['field']['key']['index']
+	 *
+	 * To the more standard and appropriate:
+	 *
+	 * $_FILES['field']['index']['key']
+	 *
+	 * @param array $files
+	 * @author Corey Ballou
+	 * @link http://www.jqueryin.com
+	 */
+	function fix_file_array(&$files) {
+		$names = array(
+			'name' => 1,
+			'type' => 1,
+			'tmp_name' => 1,
+			'error' => 1,
+			'size' => 1
+		);
+
+		foreach ($files as $key => $part) {
+			// only deal with valid keys and multiple files
+			$key = (string) $key;
+			if (isset($names[$key]) && is_array($part)) {
+				foreach ($part as $position => $value) {
+					$files[$position][$key] = $value;
+				}
+				// remove old key reference
+				unset($files[$key]);
+			}
+		}
+	}
+	
 }
 /*****  End code for meta boxes **********************/
+
 
 /**
  * Categories/Taxonomies widget class
