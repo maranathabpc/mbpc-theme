@@ -617,8 +617,16 @@ class My_meta_box {
 			if ($field['type'] == 'file' || $field['type'] == 'image') {
 				if (!empty($_FILES[$name])) {
 					$this->fix_file_array($_FILES[$name]);
-					foreach ($_FILES[$name] as $position => $fileitem) {
-						$file = wp_handle_upload($_FILES[$name], array('test_form' => false));
+				//	foreach ($_FILES[$name] as $position => $fileitem) {
+						//get the name of the uploaded file, without the extension
+						$uploaded_file = $_FILES[$name]['name'];
+						$uploaded_file = pathinfo($uploaded_file);
+						$uploaded_file = $uploaded_file['filename'];
+
+						$name_parts = explode('-', $uploaded_file);
+						$time = $name_parts[1] . '-' . $name_parts[2];
+
+						$file = wp_handle_upload($_FILES[$name], array('test_form' => false), $time );
 						$filename = $file['url'];
 						if (!empty($filename)) {
 							$currPost = get_post($post_id);
@@ -654,7 +662,7 @@ class My_meta_box {
 							$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
 							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
 						}
-					}
+			//		}
 				}
 			}
    	
