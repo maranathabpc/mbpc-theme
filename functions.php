@@ -627,7 +627,10 @@ class My_meta_box {
 							$children = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment'));
 							if($children) {
 								foreach($children as $child) {
-									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0));
+									$path_parts = pathinfo($child->guid);
+									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
+														'post_name' => $path_parts['filename'], 
+														'post_title' => $path_parts['filename']));
 								}
 							}
 
