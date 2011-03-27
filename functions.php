@@ -321,8 +321,8 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	$html = wp_get_archives($args); // let WP do the hard stuff
 	
 	if($post_type != 'all' and $type != 'postbypost' and $type != 'alpha') {
-		$pattern = 'href=\'' . get_bloginfo('url') . '/blog/';
-		$replacement = 'href=\'' . get_bloginfo('url') . '/' . $post_type .'/';
+		$pattern = get_bloginfo('url') . '/blog/';
+		$replacement = get_bloginfo('url') . '/' . $post_type .'/';
 		
 		$html = str_replace($pattern, $replacement, $html);
 	}
