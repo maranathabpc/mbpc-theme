@@ -568,6 +568,7 @@ class My_meta_box {
                     echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
                     break;
 				case 'file':
+					//find any attachments assigned to the post
 					$children = get_children(array('post_parent' => $post->ID, 'post_type' => 'attachment'));
 					if($children) {
 						echo 'Currently attached: <br/>';
@@ -617,62 +618,66 @@ class My_meta_box {
 			if ($field['type'] == 'file' || $field['type'] == 'image') {
 				if (!empty($_FILES[$name])) {
 					$this->fix_file_array($_FILES[$name]);
-				//	foreach ($_FILES[$name] as $position => $fileitem) {
-						//get the name of the uploaded file, without the extension
-						$uploaded_file = $_FILES[$name]['name'];
-						$uploaded_file = pathinfo($uploaded_file);
-						$uploaded_file = $uploaded_file['filename'];
+					//get the name of the uploaded file, without the extension
+					$uploaded_file = $_FILES[$name]['name'];
+					$uploaded_file = pathinfo($uploaded_file);
+					$uploaded_file = $uploaded_file['filename'];
+					//replace spaces with '-' to facilitate year/mth extraction
+					$uploaded_file = str_replace(' ', '-', $uploaded_file);		
 
-						$name_parts = explode('-', $uploaded_file);
-						$time = $name_parts[1] . '-' . $name_parts[2];
+					$name_parts = explode('-', $uploaded_file);
+					$time = $name_parts[1] . '-' . $name_parts[2];		//time is in yyyy-mm format
 
-						$file = wp_handle_upload($_FILES[$name], array('test_form' => false), $time );
-						$filename = $file['url'];
-						if (!empty($filename)) {
-							$currPost = get_post($post_id);
+					if(preg_match('/[0-9]{4}-[0-1][0-9]/', $time) == 0) {		//time does not match format
+						$time = null;
+					}
 
-							//unattach current attachment, if any
-							$children = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment'));
-							if($children) {
-								foreach($children as $child) {
-									$path_parts = pathinfo($child->guid);
-									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
-														'post_name' => $path_parts['filename'], 
-														'post_title' => $path_parts['filename']));
-								}
+					$file = wp_handle_upload($_FILES[$name], array('test_form' => false), $time );
+					$filename = $file['url'];
+					if (!empty($filename)) {
+						$currPost = get_post($post_id);
+
+						//unattach current attachment, if any
+						$children = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment'));
+						if($children) {
+							foreach($children as $child) {
+								$path_parts = pathinfo($child->guid);
+								wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
+											'post_name' => $path_parts['filename'], 
+											'post_title' => $path_parts['filename']));
 							}
-
-							//attach attachment post to the main parent post
-							$wp_filetype = wp_check_filetype(basename($filename), null);
-							$attachment = array(
-									'post_mime_type' => $wp_filetype['type'],
-								//	'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
-									'post_status' => 'inherit',
-									'guid' => $filename,
-									'post_title' => $currPost -> post_title
-									);
-							$attach_id = wp_insert_attachment($attachment, $filename, $post_id);
-							// you must first include the image.php file
-							// for the function wp_generate_attachment_metadata() to work
-							require_once(ABSPATH . 'wp-admin/includes/image.php');
-							$attach_data = wp_generate_attachment_metadata($attach_id, $filename);
-							wp_update_attachment_metadata($attach_id, $attach_data);
-
-							//update post content with the download text and link to the file
-							$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
-							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
 						}
-			//		}
+
+						//attach attachment post to the main parent post
+						$wp_filetype = wp_check_filetype(basename($filename), null);
+						$attachment = array(
+								'post_mime_type' => $wp_filetype['type'],
+								//	'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+								'post_status' => 'inherit',
+								'guid' => $filename,
+								'post_title' => $currPost -> post_title
+								);
+						$attach_id = wp_insert_attachment($attachment, $filename, $post_id);
+						// you must first include the image.php file
+						// for the function wp_generate_attachment_metadata() to work
+						require_once(ABSPATH . 'wp-admin/includes/image.php');
+						$attach_data = wp_generate_attachment_metadata($attach_id, $filename);
+						wp_update_attachment_metadata($attach_id, $attach_data);
+
+						//update post content with the download text and link to the file
+						$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
+						wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+					}
 				}
 			}
-   	
-            if ($new && $new != $old /*&& $field['type'] != 'file'*/) {
-                update_post_meta($post_id, $field['id'], $new);
-            } elseif ('' == $new && $old && $field['type'] != 'file' && $field['type'] != 'image') {
-                delete_post_meta($post_id, $field['id'], $old);
-            }
-        }
-    }
+
+			if ($new && $new != $old /*&& $field['type'] != 'file'*/) {
+				update_post_meta($post_id, $field['id'], $new);
+			} elseif ('' == $new && $old && $field['type'] != 'file' && $field['type'] != 'image') {
+				delete_post_meta($post_id, $field['id'], $old);
+			}
+		}
+	}
 
 
 	/**
