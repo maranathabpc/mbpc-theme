@@ -620,20 +620,32 @@ class My_meta_box {
 					$this->fix_file_array($_FILES[$name]);
 					//get the name of the uploaded file, without the extension
 					$uploaded_file = $_FILES[$name]['name'];
-					$uploaded_file = pathinfo($uploaded_file);
-					$uploaded_file = $uploaded_file['filename'];
+					$uploaded_file = basename($uploaded_file);
 					//replace spaces with '-' to facilitate year/mth extraction
 					$uploaded_file = str_replace(' ', '-', $uploaded_file);		
 
 					$name_parts = explode('-', $uploaded_file);
+					if( !is_numeric( $name_parts[2] ) ) {	//assume 3 letter month, replace with 2 digit number
+						$month_names = array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
+												"OCT", "NOV", "DEC");
+						$name_parts[2] = strtoupper($name_parts[2]);
+						$name_parts[2] = array_search($name_parts[2], $month_names) + 1;
+						$name_parts[2] = sprintf('%02u', $name_parts[2]);
+					}
 					$time = $name_parts[1] . '-' . $name_parts[2];		//time is in yyyy-mm format
+
+					if(strtoupper($name_parts[0]) == 'WEEKLY') {		//rename weekly to mm
+						$name_parts[0] = 'mm';
+					}
 
 					if(preg_match('/[0-9]{4}-[0-1][0-9]/', $time) == 0) {		//time does not match format
 						$time = null;
 					}
+					$_FILES[$name]['name'] = implode('-', $name_parts);			//rename file
 
 					$file = wp_handle_upload($_FILES[$name], array('test_form' => false), $time );
 					$filename = $file['url'];
+					$new = $file['error'];
 					if (!empty($filename)) {
 						$currPost = get_post($post_id);
 
