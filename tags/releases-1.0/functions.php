@@ -645,7 +645,6 @@ class My_meta_box {
 
 					$file = wp_handle_upload($_FILES[$name], array('test_form' => false), $time );
 					$filename = $file['url'];
-					$new = $file['error'];
 					if (!empty($filename)) {
 						$currPost = get_post($post_id);
 
