@@ -676,8 +676,8 @@ class My_meta_box {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						//update post content with the download text and link to the file
-						$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
-						wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+						//$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
+						//wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
 					}
 				}
 			}
