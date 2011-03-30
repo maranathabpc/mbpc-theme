@@ -76,7 +76,27 @@
 			<?php endif; ?>
 			
 			<div class="entry-content">
-				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
+				<?php //the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
+				<?php 	$content = get_the_content();
+						$content = apply_filters('the_content', $content);
+						$content = str_replace(']]>', ']]&gt;', $content);
+						
+						//if there is no content, get the attachment ID and generate it
+						if(empty($content)) {
+							$children = get_children(array('post_parent' => get_the_ID(), 'post_type' => 'attachment'));
+							if ( $children ) {
+								foreach ( $children as $child ) {
+									
+									$content = '<p>Download MM: <a href=\'' . wp_get_attachment_url( $child -> ID ) . '\'>' 
+												. get_the_title( get_the_ID() ) . '</a></p>';
+								}
+							}
+							else {
+								$content = '<p>Sorry, no MM has been uploaded for this service.</p>';
+							}
+						}
+						echo $content; 
+				?>
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->
 
