@@ -1,4 +1,7 @@
 <?php
+
+load_theme_textdomain('mbpctheme', STYLESHEETPATH . '/languages');
+
 //remove action hook for twentyten widget areas
 remove_action('widgets_init','twentyten_widgets_init');
 
@@ -208,7 +211,7 @@ add_action('admin_menu', 'mbpc_remove_menu_items');
 
 //override the posted on function in the parent theme because we don't want the author name
 function twentyten_posted_on() {
-	printf( __( '<span class="%1$s">Posted on</span> %2$s', 'twentyten' ),
+	printf( __( '<span class="%1$s">Posted on</span> %2$s', 'mbpctheme' ),
 		'meta-prep meta-prep-author',
 		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
 			get_permalink(),
