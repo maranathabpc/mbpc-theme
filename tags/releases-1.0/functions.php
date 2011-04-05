@@ -729,6 +729,26 @@ class My_meta_box {
 }
 /*****  End code for meta boxes **********************/
 
+/***** add filter for wp_get_attachment_url() to handle different output for subsites *******/
+
+add_filter( 'wp_get_attachment_url', 'mbpc_wp_get_attachment_url_filter', 10, 2);
+
+function mbpc_wp_get_attachment_url_filter($url, $postID) {
+	$upload_dir = wp_upload_dir();
+
+	//search through the url and see if it contains a 2nd instance of the baseurl
+	$pos = strpos( $url, $upload_dir['baseurl'] , 1);
+
+	if ( $pos !== false) {		//2nd instance exists
+		$url = substr ($url, $pos);
+		//update post meta so it won't have to find the substring on subsequent calls
+		update_post_meta( $postID, '_wp_attached_file', substr( $url, strlen( $upload_dir['baseurl'] ) + 1 ));
+	}
+	return $url;
+}
+
+/*****   End code for wp_get_attachment_url filter **************/
+
 
 /**
  * Categories/Taxonomies widget class
