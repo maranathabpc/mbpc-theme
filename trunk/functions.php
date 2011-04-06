@@ -628,6 +628,12 @@ class My_meta_box {
 					$uploaded_file = str_replace(' ', '-', $uploaded_file);		
 
 					$name_parts = explode('-', $uploaded_file);
+
+					if ( count( $name_parts ) == 5 ) {		//Chinese MM yyyy mm dd
+						$name_parts[0] = 'chi';
+						unset( $name_parts[1] );
+						$name_parts = array_values( $name_parts );		//re-index
+					}
 					if( !is_numeric( $name_parts[2] ) ) {	//assume 3 letter month, replace with 2 digit number
 						$month_names = array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
 												"OCT", "NOV", "DEC");
