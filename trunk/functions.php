@@ -626,7 +626,6 @@ class My_meta_box {
 					$uploaded_file = basename($uploaded_file);
 					//replace spaces with '-' to facilitate year/mth extraction
 					$uploaded_file = str_replace(' ', '-', $uploaded_file);		
-
 					$name_parts = explode('-', $uploaded_file);
 
 					if ( count( $name_parts ) == 5 ) {		//Chinese MM yyyy mm dd
@@ -646,6 +645,9 @@ class My_meta_box {
 					if(strtoupper($name_parts[0]) == 'WEEKLY') {		//rename weekly to mm
 						$name_parts[0] = 'mm';
 					}
+					$last_part = explode('.', $name_parts[3]);			//split file extension and day
+					$last_part[0] = sprintf('%02u', $last_part[0]);		//convert day to 2 digit format
+					$name_parts[3] = implode('.', $last_part);			//combine day and extension
 
 					if(preg_match('/[0-9]{4}-[0-1][0-9]/', $time) == 0) {		//time does not match format
 						$time = null;
