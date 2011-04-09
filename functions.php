@@ -34,7 +34,6 @@ function mbpc_widgets_init() {
 
 add_action('widgets_init','mbpc_widgets_init');
 
-
 //show home page in Wordpress Menu administration
 function home_page_menu_args($args) {
 	$args['show_home'] = true;
@@ -479,6 +478,23 @@ $meta_boxes[] = array(
 	)
 );
 
+$meta_boxes[] = array(
+	'id' => 'sermon-audio-upload',
+	'title' => 'Sermon Audio Upload',
+	'pages' => array( 'sermon' ),
+	'context' => 'normal',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'Sermon Audio File',
+			'desc' => 'Select the MP3 file to upload',
+			'id' => $prefix . 'sermon_file',
+			'type' => 'file',
+			'std' => ''
+		)
+	)
+);
+
 
 foreach($meta_boxes as $meta_box) {
 	$my_box = new My_meta_box($meta_box);
@@ -503,11 +519,26 @@ class My_meta_box {
 		$current_page = substr(strrchr($_SERVER['PHP_SELF'], '/'), 1, -4);
 		if ($upload && ($current_page == 'page' || $current_page == 'page-new' || $current_page == 'post' || $current_page == 'post-new')) {
 			add_action('admin_head', array(&$this, 'add_post_enctype'));
+			//add_action( 'admin_head', array( &$this, 'hide_editor' ) );
+		}
+		if( isset( $_GET['post_type'] ) ) {
+			add_action( 'admin_head', array( &$this, 'hide_editor' ) );
 		}
 
 		add_action('admin_menu', array(&$this, 'add'));
         add_action('save_post', array(&$this, 'save'));
     }
+
+	function hide_editor() {
+		?>
+			<style>
+				#editor-toolbar { display: none; }
+				#editorcontainer {display: none; }
+				#quicktags {display:none;}
+				#post-status-info {display:none;}
+			</style>
+		<?php
+	}
 
 	function add_post_enctype() {
 		echo '
