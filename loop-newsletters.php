@@ -87,7 +87,7 @@
 							if ( $children ) {
 								foreach ( $children as $child ) {
 									
-									$content = '<p>' . __('Download MM', 'mbpctheme') . ': <a href=\'' . wp_get_attachment_url( $child -> ID ) . '\'>' 
+									$content .= '<p>' . __('Download MM', 'mbpctheme') . ': <a href=\'' . wp_get_attachment_url( $child -> ID ) . '\'>' 
 												. get_the_title( get_the_ID() ) . '</a></p>';
 								}
 							}

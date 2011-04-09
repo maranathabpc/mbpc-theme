@@ -521,7 +521,12 @@ class My_meta_box {
 			add_action('admin_head', array(&$this, 'add_post_enctype'));
 			//add_action( 'admin_head', array( &$this, 'hide_editor' ) );
 		}
-		if( isset( $_GET['post_type'] ) ) {
+		//hide editor if adding a new post of sermon type
+		if( isset( $_GET['post_type'] ) && 'sermon' == $_GET['post_type'] ) {
+			add_action( 'admin_head', array( &$this, 'hide_editor' ) );
+		}
+		//hide editor if editing a post which is a sermon type
+		if( isset( $_GET['post'] ) && 'sermon' == get_post_type( $_GET['post'] ) ) {
 			add_action( 'admin_head', array( &$this, 'hide_editor' ) );
 		}
 
@@ -652,7 +657,7 @@ class My_meta_box {
 			if ($field['type'] == 'file' || $field['type'] == 'image') {
 				if (!empty($_FILES[$name])) {
 					$this->fix_file_array($_FILES[$name]);
-					//get the name of the uploaded file, without the extension
+					//get the name of the uploaded file 
 					$uploaded_file = $_FILES[$name]['name'];
 					$uploaded_file = basename($uploaded_file);
 					//replace spaces with '-' to facilitate year/mth extraction
@@ -691,13 +696,18 @@ class My_meta_box {
 						$currPost = get_post($post_id);
 
 						//unattach current attachment, if any
+						//only unattach files with the same prefix as the uploaded one
 						$children = get_children(array('post_parent' => $post_id, 'post_type' => 'attachment'));
 						if($children) {
 							foreach($children as $child) {
 								$path_parts = pathinfo($child->guid);
-								wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
-											'post_name' => $path_parts['filename'], 
-											'post_title' => $path_parts['filename']));
+								//check if prefix of uploaded file matches prefix of file to be unattached
+								$child_parts = explode( '-', $path_parts['filename']);
+								if( $child_parts[0] == $name_parts [0] ) {
+									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
+												'post_name' => $path_parts['filename'], 
+												'post_title' => $path_parts['filename']));
+								}
 							}
 						}
 
@@ -718,8 +728,11 @@ class My_meta_box {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						//update post content with the download text and link to the file
-						//$post_content = 'Download MM: <a href=\'' . $filename . '\'>' . $currPost -> post_title . '</a>';
-						//wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+						if( strtoupper( $name_parts[0] ) == 'SERMON' ) {
+							$post_content = '[audio:' . $filename . '|titles=' . $currPost -> post_title . ']';
+							$post_content .= '<p>Download MP3: <a href="' . $filename . '">' . $currPost -> post_title . '</a></p>';
+							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+						}
 					}
 				}
 			}
