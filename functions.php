@@ -664,11 +664,32 @@ class My_meta_box {
 					$uploaded_file = str_replace(' ', '-', $uploaded_file);		
 					$name_parts = explode('-', $uploaded_file);
 
-					if ( count( $name_parts ) == 5 ) {		//Chinese MM yyyy mm dd
-						$name_parts[0] = 'chi';
-						unset( $name_parts[1] );
-						$name_parts = array_values( $name_parts );		//re-index
+					//check if it's a chinese file, they should all have chi as the prefix
+					$pos = strpos( strtoupper( $name_parts[0] ), 'CHI' );
+					
+					//english sermon or newsletter
+					if ( $pos === false ) {
+						if( 'WEEKLY' == strtoupper( $name_parts[0] ) ) {		//rename weekly to mm
+							$name_parts[0] = 'mm';
+						}
+						$name_parts[0] = strtolower( $name_parts[0] );		//convert prefix to lowercase
 					}
+					else {			//chinese sermon or newsletter
+						if ( count( $name_parts ) == 5 ) {		//Chinese <type> yyyy mm dd.<extension>
+							//final filename will be chi-mm-yyyy-mm-dd.pdf
+							if ( 'MM' == strtoupper( $name_parts[1] ) )
+								$name_parts[0] = 'chi-mm';
+							//final filename will be chi-sermon-yyyy-mm-dd.mp3
+							elseif ( 'SERMON' == strtoupper( $name_parts[1] ) )
+								$name_parts[0] = 'chi-sermon';
+
+							unset( $name_parts[1] );
+							$name_parts = array_values( $name_parts );		//re-index to 4 part filename
+						}
+
+					}
+					
+					//assumes 4 part filenames for date operations
 					if( !is_numeric( $name_parts[2] ) ) {	//assume 3 letter month, replace with 2 digit number
 						$month_names = array("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
 												"OCT", "NOV", "DEC");
@@ -676,15 +697,12 @@ class My_meta_box {
 						$name_parts[2] = array_search($name_parts[2], $month_names) + 1;
 						$name_parts[2] = sprintf('%02u', $name_parts[2]);
 					}
-					$time = $name_parts[1] . '-' . $name_parts[2];		//time is in yyyy-mm format
 
-					if(strtoupper($name_parts[0]) == 'WEEKLY') {		//rename weekly to mm
-						$name_parts[0] = 'mm';
-					}
 					$last_part = explode('.', $name_parts[3]);			//split file extension and day
 					$last_part[0] = sprintf('%02u', $last_part[0]);		//convert day to 2 digit format
 					$name_parts[3] = implode('.', $last_part);			//combine day and extension
 
+					$time = $name_parts[1] . '-' . $name_parts[2];		//time is in yyyy-mm format
 					if(preg_match('/[0-9]{4}-[0-1][0-9]/', $time) == 0) {		//time does not match format
 						$time = null;
 					}
@@ -703,7 +721,8 @@ class My_meta_box {
 								$path_parts = pathinfo($child->guid);
 								//check if prefix of uploaded file matches prefix of file to be unattached
 								$child_parts = explode( '-', $path_parts['filename']);
-								if( $child_parts[0] == $name_parts [0] ) {
+								//chinese attachments have 5 elements when exploded, need to concat the 1st 2 with a '-' in between
+								if( $child_parts[0] == $name_parts [0] || ( ( $child_parts[0].'-'.$child_parts[1] ) == $name_parts[0] ) ) {
 									wp_update_post(array('ID' => $child->ID, 'post_parent' => 0, 
 												'post_name' => $path_parts['filename'], 
 												'post_title' => $path_parts['filename']));
@@ -728,7 +747,9 @@ class My_meta_box {
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
 						//update post content with the download text and link to the file
-						if( strtoupper( $name_parts[0] ) == 'SERMON' ) {
+						//add post content only if it's a sermon type
+						$pos = strpos ( strtoupper( $name_parts[0] ), 'SERMON' );
+						if( $pos !== false ) {
 							$post_content = '[audio:' . $filename . '|titles=' . $currPost -> post_title . ']';
 							$post_content .= '<p>Download MP3: <a href="' . $filename . '">' . $currPost -> post_title . '</a></p>';
 							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
