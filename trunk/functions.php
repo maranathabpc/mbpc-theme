@@ -445,7 +445,7 @@ $meta_boxes[] = array(
 	'fields' => array(
 		array(
 			'name' => 'Newsletter Upload',
-			'desc' => 'Select the MM to upload',
+			'desc' => 'Filename format: ' . __('mm-yyyy-mm-dd.pdf', 'mbpctheme'),
 			'id' => $prefix . 'newsletter_file',
 			'type' => 'file',
 			'std' => ''
@@ -487,7 +487,7 @@ $meta_boxes[] = array(
 	'fields' => array(
 		array(
 			'name' => 'Sermon Audio File',
-			'desc' => 'Select the MP3 file to upload',
+			'desc' => 'Filename format: ' . __('sermon-yyyy-mm-dd.mp3', 'mbpctheme'),
 			'id' => $prefix . 'sermon_file',
 			'type' => 'file',
 			'std' => ''
