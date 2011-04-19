@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mbpctheme\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-05 22:42+0730\n"
+"POT-Creation-Date: 2011-04-19 23:42+0730\n"
 "PO-Revision-Date: \n"
 "Last-Translator: fonglh <fonglh@msn.com>\n"
 "Language-Team: fonglh <fonglh@msn.com>\n"
@@ -43,26 +43,26 @@ msgstr ""
 msgid "The fourth widget area"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:71
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:198
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:70
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:197
 msgid "Sermons"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:72
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:71
 msgid "Sermon"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:73
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:97
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:72
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:96
 msgid "Add New"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:74
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:73
 msgid "Add New Sermon"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:75
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:99
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:74
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:98
 #: /home/fonglh/wpThemes/mbpcTheme/trunk/loop-newsletters.php:121
 #: /home/fonglh/wpThemes/mbpcTheme/trunk/loop-index.php:104
 #: /home/fonglh/wpThemes/mbpcTheme/trunk/loop-index.php:128
@@ -73,234 +73,242 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:76
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:75
 msgid "Edit Sermon"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:77
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:76
 msgid "New Sermon"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:78
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:77
 msgid "View Sermon"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:79
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:78
 msgid "Search Sermons"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:80
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:79
 msgid "No sermons found"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:81
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:80
 msgid "No sermons found in trash"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:82
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:81
 msgid "Contains a link to the recording of the sermon as well as the sermon summary"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:95
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:94
 msgid "Maranatha Messengers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:96
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:95
 msgid "Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:98
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:97
 msgid "Add New Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:100
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:99
 msgid "Edit Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:101
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:100
 msgid "New Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:102
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:101
 msgid "View the Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:103
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:102
 msgid "Search Maranatha Messengers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:104
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:103
 msgid "No Maranatha Messengers found"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:105
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:104
 msgid "No weeklies found in trash"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:106
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:105
 msgid "Download link for the Maranatha Messenger"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:131
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:130
 msgid "Speakers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:132
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:131
 msgid "Speaker"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:133
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:132
 msgid "Search for Speakers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:134
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:133
 msgid "Popular Speakers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:135
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:134
 msgid "All Speakers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:136
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:135
 msgid "Edit Speaker"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:137
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:136
 msgid "Update Speaker"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:138
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:137
 msgid "Add New Speaker"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:139
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:138
 msgid "Name of New Speaker"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:140
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:139
 msgid "Add or remove speakers"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:153
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:152
 msgid "Themes"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:154
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:153
 msgid "Theme"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:155
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:154
 msgid "Search for Themes"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:156
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:155
 msgid "Popular Themes"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:157
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:156
 msgid "All Themes"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:158
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:157
 msgid "Edit Theme"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:159
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:158
 msgid "Update Theme"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:160
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:159
 msgid "Add New Theme"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:161
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:160
 msgid "Name of New Theme"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:162
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:161
 msgid "Add or remove themes"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:181
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:180
 msgid "Posts"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:198
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:197
 msgid "Maranatha"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:198
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:197
 msgid "Tools"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:198
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:197
 msgid "Links"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:214
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:213
 #, php-format
 msgid "<span class=\"%1$s\">Posted on</span> %2$s"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:350
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:349
 msgid "A monthly archive of your specified post type"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:351
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:350
 msgid "Custom Post Type Archives"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:358
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:357
 msgid "Sermon Archives"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:367
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:366
 msgid "Select Month"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:398
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:836
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:397
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:909
 msgid "Title:"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:400
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:399
 msgid "Custom Post Type:"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:402
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:846
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:401
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:919
 msgid "Show post counts"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:404
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:403
 msgid "Display as a drop down"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:765
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:448
+msgid "mm-yyyy-mm-dd.pdf"
+msgstr "chi-mm-yyyy-mm-dd.pdf"
+
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:490
+msgid "sermon-yyyy-mm-dd.mp3"
+msgstr "chi-sermon-yyyy-mm-dd.pdf"
+
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:838
 msgid "A list or dropdown of custom taxonomy terms"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:766
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:839
 msgid "Custom Taxonomy Terms"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:772
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:845
 msgid "Categories"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:785
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:858
 msgid "Select Category"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:839
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:912
 msgid "Taxonomy:"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:843
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:916
 msgid "Show as dropdown"
 msgstr ""
 
-#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:849
+#: /home/fonglh/wpThemes/mbpcTheme/trunk/functions.php:922
 msgid "Show hierarchy"
 msgstr ""
 
