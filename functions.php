@@ -175,16 +175,7 @@ function mbpc_register_taxonomies() {
 */
 function mbpc_remove_menu_items() {
 	if ( current_user_can( 'edit_others_sermons' ) && !current_user_can( 'update_core') ) {
-
-		global $menu;
-		$restricted = array(__('Posts'));
-		end ($menu);
-		while (prev($menu)){
-			$value = explode(' ',$menu[key($menu)][0]);
-			if(in_array($value[0] != NULL?$value[0]:"" , $restricted)) {
-				unset($menu[key($menu)]);
-			}
-		}
+		remove_menu_page( 'edit.php' );
 	}
 
 	//hide sermons and newsletters from blogger
@@ -202,6 +193,7 @@ function mbpc_remove_menu_items() {
 				unset($menu[key($menu)]);
 			}
 		}
+		remove_menu_page( 'upload.php' );
 	}
 
 }
