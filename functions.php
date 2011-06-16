@@ -320,6 +320,37 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 		
 		$html = str_replace($pattern, $replacement, $html);
 	}
+
+	//get an array of all the years
+	//the generated html is in reverse chronological order
+	//this can be used to determine when to insert a year header
+	preg_match_all("|<li><a .*>.*([0-9]{4}).*</a></li>|", $html, $out, PREG_PATTERN_ORDER);
+
+	$html = "";
+	$year_counts = array();
+
+	//counts the number of months with archives for each year
+	foreach ( $out[1] as $entry ) {
+		if ( isset( $year_counts[ $entry ] ) ) {		//increment count for the year
+			$year_counts[ $entry ] = $year_counts[ $entry ] + 1;
+		}
+		else {
+			$year_counts[ $entry ] = 1;					//1st time this year is encountered
+		}
+	}
+
+	$years = array_keys( $year_counts );
+	$counts = array_values( $year_counts );
+	$i = 0;
+
+	foreach ( $years as $year ) {
+		$html .= '<li><h3>' . $year . '</h3><ul>';
+		for ( $j = 0; $j < $counts[ $i ]; $j++) {
+			$html .= $out[ 0 ][ $j ];
+		}
+		$i++;
+		$html .= '</ul></li>';
+	}
 	
 	if($echo)
 		echo $html;
@@ -327,6 +358,20 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 		return $html;
 }
 
+function enqueue_accordion_script() {
+
+}
+
+//add_action( 'init', 'enqueue_accordion_script' );
+
+function add_jquery_accordion() {
+	echo '<script type="text/javascript">
+			jQuery(document).ready(function() {
+				jQuery("#accordion").accordion();
+			});
+			</script>';
+}
+//add_action( 'init', 'add_jquery_accordion' );
 
 /**
  * Archives widget class
@@ -359,7 +404,7 @@ class WP_Widget_Custom_Post_Type_Archives extends WP_Widget {
 <?php
 		} else {
 ?>
-		<ul>
+		<ul id="accordion">
 		<?php mbpc_get_post_type_archives($post_type,apply_filters('widget_custom_post_type_archives_args', array('type' => 'monthly', 'show_post_count' => $c))); ?>
 		</ul>
 <?php
