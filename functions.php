@@ -342,11 +342,13 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	$years = array_keys( $year_counts );
 	$counts = array_values( $year_counts );
 	$i = 0;
+	$k = 0;
 
 	foreach ( $years as $year ) {
-		$html .= '<li><h3>' . $year . '</h3><ul>';
-		for ( $j = 0; $j < $counts[ $i ]; $j++) {
-			$html .= $out[ 0 ][ $j ];
+		$html .= '<li><h3>' . $year . '</h3><ul>';		//create a heading for each year
+		for ( $j = 0; $j < $counts[ $i ]; $j++) {		//create an entry for each month in the year
+			$html .= $out[ 0 ][ $k ];
+			$k++;
 		}
 		$i++;
 		$html .= '</ul></li>';
@@ -359,19 +361,18 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 }
 
 function enqueue_accordion_script() {
-
+	wp_register_script( 'enqueue-accordion-script', get_stylesheet_directory_uri() . '/scripts/jquery-ui-1.8.13.custom.min.js',
+						array( 'jquery' ) );
+	wp_enqueue_script( 'enqueue-accordion-script' );
 }
 
-//add_action( 'init', 'enqueue_accordion_script' );
+add_action( 'init', 'enqueue_accordion_script' );
 
 function add_jquery_accordion() {
-	echo '<script type="text/javascript">
-			jQuery(document).ready(function() {
-				jQuery("#accordion").accordion();
-			});
-			</script>';
+	wp_enqueue_script( 'add-jquery-accordion', get_stylesheet_directory_uri() . '/scripts/jquery-accordion-init.js', 
+						array( 'jquery', 'enqueue-accordion-script' ) );
 }
-//add_action( 'init', 'add_jquery_accordion' );
+add_action( 'init', 'add_jquery_accordion' );
 
 /**
  * Archives widget class
