@@ -270,3 +270,12 @@ h3,
 	text-align: right;
 }
 
+/*jquery accordion*/
+#main .widget-area ul ul.ui-accordion-content {
+	margin-left: 30px; 
+	margin-bottom: 15px;
+}
+
+h3.ui-accordion-header {
+	cursor: pointer;
+}
