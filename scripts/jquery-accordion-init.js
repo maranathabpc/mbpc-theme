@@ -1,4 +1,7 @@
 jQuery(document).ready(function() {
-				jQuery("#accordion").accordion();
+				jQuery("#accordion").accordion({
+					autoHeight: false,
+					collapsible: true
+				});
 			});
 

@@ -345,13 +345,13 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	$k = 0;
 
 	foreach ( $years as $year ) {
-		$html .= '<li><h3>' . $year . '</h3><ul>';		//create a heading for each year
+		$html .= '<h3>' . $year . '</h3><ul>';		//create a heading for each year
 		for ( $j = 0; $j < $counts[ $i ]; $j++) {		//create an entry for each month in the year
 			$html .= $out[ 0 ][ $k ];
 			$k++;
 		}
 		$i++;
-		$html .= '</ul></li>';
+		$html .= '</ul>';
 	}
 	
 	if($echo)
@@ -405,9 +405,9 @@ class WP_Widget_Custom_Post_Type_Archives extends WP_Widget {
 <?php
 		} else {
 ?>
-		<ul id="accordion">
+		<div id="accordion">
 		<?php mbpc_get_post_type_archives($post_type,apply_filters('widget_custom_post_type_archives_args', array('type' => 'monthly', 'show_post_count' => $c))); ?>
-		</ul>
+		</div>
 <?php
 		}
 
