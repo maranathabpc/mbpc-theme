@@ -278,8 +278,8 @@ div.ui-accordion-content {
 	padding-left: 30px;
 	padding-bottom: 15px;
 	background-color: #EEE;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 h3.ui-accordion-header {
@@ -289,8 +289,8 @@ h3.ui-accordion-header {
 	padding-bottom: 8px;
 	padding-left: 4px;
 	padding-top: 4px;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 h3.ui-accordion-header.ui-state-active {
