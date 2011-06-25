@@ -345,13 +345,13 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	$k = 0;
 
 	foreach ( $years as $year ) {
-		$html .= '<h3>' . $year . '</h3><ul>';		//create a heading for each year
+		$html .= '<h3>' . $year . '</h3><div><ul class="accordion-list-content">';		//create a heading for each year
 		for ( $j = 0; $j < $counts[ $i ]; $j++) {		//create an entry for each month in the year
 			$html .= $out[ 0 ][ $k ];
 			$k++;
 		}
 		$i++;
-		$html .= '</ul>';
+		$html .= '</ul></div>';
 	}
 	
 	if($echo)
