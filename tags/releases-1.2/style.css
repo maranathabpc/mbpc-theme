@@ -271,7 +271,9 @@ h3,
 }
 
 /*jquery accordion*/
-.accordion-list-content {
+ul.accordion-list-content li{
+	padding-top: 3px;
+	padding-bottom: 3px;
 }
 
 div.ui-accordion-content {
@@ -303,7 +305,3 @@ h3.ui-accordion-header.ui-state-hover {
 	color: #1B1E26;
 }
 
-li {
-	padding-top: 2px;
-	padding-bottom: 2px;
-}
