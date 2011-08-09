@@ -3,5 +3,9 @@ jQuery(document).ready(function() {
 					autoHeight: false,
 					collapsible: true
 				});
+				jQuery("#accordion-home").accordion({
+					autoHeight: false,
+					collapsible: true,
+					active: false
+				});
 			});
-
