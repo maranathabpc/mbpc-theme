@@ -276,7 +276,7 @@ ul.accordion-list-content li{
 	padding-bottom: 3px;
 }
 
-div.ui-accordion-content {
+#accordion div.ui-accordion-content {
 	padding-left: 30px;
 	padding-bottom: 15px;
 	background-color: #EEE;
@@ -284,7 +284,7 @@ div.ui-accordion-content {
 	border-bottom-right-radius: 5px;
 }
 
-h3.ui-accordion-header {
+#accordion h3.ui-accordion-header {
 	cursor: pointer;
 	background-color: #F2EFBD;
 	margin-bottom: 0px;
@@ -295,12 +295,12 @@ h3.ui-accordion-header {
 	border-top-right-radius: 5px;
 }
 
-h3.ui-accordion-header.ui-state-active {
+#accordion h3.ui-accordion-header.ui-state-active {
 	background-color: #B6D051;
 	color: #1B1E26;
 }
 
-h3.ui-accordion-header.ui-state-hover {
+#accordion h3.ui-accordion-header.ui-state-hover {
 	background-color: #B6D051;
 	color: #1B1E26;
 }
