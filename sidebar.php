@@ -12,7 +12,7 @@
 
 <?php 
 	wp_reset_query();
-	if(is_post_type_archive('sermon') || is_tax() || is_page_template('sermon-template.php')) : ?>
+	if( 'sermon' == get_post_type() || is_tax() || is_page_template('sermon-template.php')) : ?>
 
 		<div id="primary" class="widget-area" role="complementary">
 			<ul class="xoxo">
@@ -49,7 +49,7 @@
 			</ul>
 		</div><!-- #primary .widget-area -->
 
-<?php elseif(is_post_type_archive('newsletter') || is_category() || is_page_template('newsletter-template.php')) :
+<?php elseif( is_category() || is_page_template('newsletter-template.php') || 'newsletter' == get_post_type()) :
 	// A second sidebar for widgets, just because.
 	if ( is_active_sidebar( 'secondary-widget-area' ) ) : ?>
 
@@ -61,7 +61,7 @@
 
 <?php endif; //end secondary widget area ?>
 
-<?php elseif(is_post_type_archive( 'qna' ) || is_category() || is_page_template( 'qna-template.php' )) :
+<?php elseif( is_category() || is_page_template( 'qna-template.php' ) || 'qna' == get_post_type() ) :
 	//widget area for qna pages
 	if ( is_active_sidebar( 'fifth-widget-area' ) ) : ?>
 
