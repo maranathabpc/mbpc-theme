@@ -61,6 +61,18 @@
 
 <?php endif; //end secondary widget area ?>
 
+<?php elseif(is_post_type_archive( 'qna' ) || is_category() || is_page_template( 'qna-template.php' )) :
+	//widget area for qna pages
+	if ( is_active_sidebar( 'fifth-widget-area' ) ) : ?>
+
+		<div id="fifth-widget-area" class="widget-area" role="complementary">
+			<ul class="xoxo">
+				<?php dynamic_sidebar( 'fifth-widget-area' ); ?>
+			</ul>
+		</div><!-- #fifth-widget .widget-area -->
+
+<?php endif; //end fifth widget area ?>
+
 <?php elseif(is_page()) :
 	//Third widget area, for pages
 	if(is_active_sidebar('third-widget-area')) : ?>

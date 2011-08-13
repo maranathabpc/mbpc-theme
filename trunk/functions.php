@@ -10,7 +10,7 @@ function mbpc_widgets_init() {
 
 	// Area 3, will show up when certain conditions are met, see sidebar.php 
 	register_sidebar( array(
-		'name' => __( 'Third Widget Area', 'twentyten' ),
+		'name' => __( 'Pages Widget Area', 'twentyten' ),
 		'id' => 'third-widget-area',
 		'description' => __( 'The third widget area', 'twentyten' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
@@ -21,7 +21,7 @@ function mbpc_widgets_init() {
 
 	// Area 4, will show up when certain conditions are met, see sidebar.php 
 	register_sidebar( array(
-		'name' => __( 'Fourth Widget Area', 'twentyten' ),
+		'name' => __( 'Posts Widget Area', 'twentyten' ),
 		'id' => 'fourth-widget-area',
 		'description' => __( 'The fourth widget area', 'twentyten' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
@@ -29,6 +29,18 @@ function mbpc_widgets_init() {
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	) );
+	
+	// Area 5, will show up when certain conditions are met, see sidebar.php 
+	register_sidebar( array(
+		'name' => __( 'QnA Widget Area', 'twentyten' ),
+		'id' => 'fifth-widget-area',
+		'description' => __( 'The fifth widget area', 'twentyten' ),
+		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
+		'after_widget' => '</li>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
 
 }
 
@@ -114,6 +126,32 @@ function mbpc_create_my_post_types() {
 						)
 						);
 
+	//for question and answer content
+	register_post_type('qna',
+						array(
+							'labels'=>array(
+										'name'=>__('Questions and Answers'),
+										'singular_name'=>__('Question and Answer'),
+										'add_new'=>__('Add New'),
+										'add_new_item'=>__('Add New Question and Answer'),
+										'edit'=>__('Edit'),
+										'edit_item'=>__('Edit Question and Answer'),
+										'new_item'=>__('New Question and Answer'),
+										'view_item'=>__('View the Question and Answer'),
+										'search_items'=>__('Search Questions and Answers'),
+										'not_found'=>__('No Questions and Answers found'),
+										'not_found_in_trash'=>__('No Question and Answers found in trash')),
+							'description'=>__('Download link for the QnA document'),
+							'public'=>true,
+							'menu_position'=>7,
+							'rewrite'=>array('with_front'=>false),
+							'has_archive' => true,
+							'capability_type' => 'qna',
+							'map_meta_cap' => true,
+							'taxonomies' => array('category'),		//allows qna post type to use default categories
+							'supports' => array('title')			//so the editor window isn't show
+						)
+						);
 }
 
 
@@ -376,7 +414,7 @@ add_action( 'init', 'add_jquery_accordion' );
 
 /**
  * Archives widget class
- * Modified to use sermon custom post type
+ * Modified to use custom post type defined in widget
  *
  * Pre-reqs: Custom Post Type Plugin, any post type (declared above)
  * @since 3.0.5
@@ -449,7 +487,7 @@ add_action('widgets_init', create_function('', 'return register_widget("WP_Widge
 //from the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
 //new code is from the multiple meta box tutorial at http://www.deluxeblogtips.com/2010/05/howto-meta-box-wordpress.html
 /**************************************************************************************************************
- *  the code below adds meta boxes for the sermon and newsletter post types
+ *  the code below adds meta boxes for the sermon, newsletter, and qna post types
  *************************************************************************************************************/
 
 $prefix = 'mbpc_';
@@ -516,6 +554,7 @@ $meta_boxes[] = array(
 	)
 );
 
+//meta box for sermon mp3 upload for sermon custom post type
 $meta_boxes[] = array(
 	'id' => 'sermon-audio-upload',
 	'title' => 'Sermon Audio Upload',
@@ -527,6 +566,24 @@ $meta_boxes[] = array(
 			'name' => 'Sermon Audio File',
 			'desc' => 'Filename format: ' . __('sermon-yyyy-mm-dd.mp3', 'mbpctheme'),
 			'id' => $prefix . 'sermon_file',
+			'type' => 'file',
+			'std' => ''
+		)
+	)
+);
+
+//meta box for PDF upload of qna custom post type
+$meta_boxes[] = array(
+	'id' => 'qna-upload',
+	'title' => 'Question and Answer Upload',
+	'pages' => array( 'qna' ),
+	'context' => 'normal',
+	'priority' => 'high',
+	'fields' => array(
+		array(
+			'name' => 'Question and Answer Upload',
+			'desc' => 'Filename format: ' . __( 'qna-yyyy-mm-dd.pdf', 'mbpctheme' ),
+			'id' => $prefix . 'qna_file',
 			'type' => 'file',
 			'std' => ''
 		)
