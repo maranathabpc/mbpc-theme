@@ -65,8 +65,7 @@
 						$content = apply_filters('the_content', $content);
 						$content = str_replace(']]>', ']]&gt;', $content);
 						
-						//if there is no content, get the attachment ID and generate it
-						if(empty($content)) {
+						//get the attachment ID and generate it
 							$children = get_children(array('post_parent' => get_the_ID(), 'post_type' => 'attachment'));
 							if ( $children ) {
 								foreach ( $children as $child ) {
@@ -78,7 +77,6 @@
 							else {
 								$content = '<p>Sorry, no answer file has been uploaded.</p>';
 							}
-						}
 						echo $content; 
 				?>
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
