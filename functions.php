@@ -148,8 +148,7 @@ function mbpc_create_my_post_types() {
 							'has_archive' => true,
 							'capability_type' => 'qna',
 							'map_meta_cap' => true,
-							'taxonomies' => array('category'),		//allows qna post type to use default categories
-							'supports' => array('title')			//so the editor window isn't show
+							'taxonomies' => array('category')		//allows qna post type to use default categories
 						)
 						);
 }
