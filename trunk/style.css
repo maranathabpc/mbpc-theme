@@ -4,7 +4,7 @@ Theme URI: http://www.maranatha-bpc.com/
 Description: Child theme of the twentyten wordpress theme
 Author: fonglh
 Template: twentyten
-Version: 1.0
+Version: 1.5
 Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-background, threaded-comments, sticky-post, translation-ready, microformats, rtl-language-support, editor-style
 */
 
@@ -154,7 +154,7 @@ body {
 #weekly-activities h3{
 	font-style:normal;
 	text-transform: uppercase;
-	text-align: right;
+	text-align: left;
 	background-color: #B6D051;
 	color: #2F6D7A;
 	padding: 3px 5px 3px 0px;
