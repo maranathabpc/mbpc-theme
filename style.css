@@ -61,6 +61,7 @@ body {
 	-khtml-border-radius: 12px;
 	-webkit-border-radius: 12px;
 	border-radius: 12px;
+	margin-bottom: 20px;
 }
 
 #content,
