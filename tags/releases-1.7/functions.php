@@ -631,10 +631,7 @@ class My_meta_box {
 	function hide_editor() {
 		?>
 			<style>
-				#editor-toolbar { display: none; }
-				#editorcontainer {display: none; }
-				#quicktags {display:none;}
-				#post-status-info {display:none;}
+				#postdivrich {display:none;}
 			</style>
 		<?php
 	}
