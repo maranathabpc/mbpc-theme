@@ -1017,4 +1017,28 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 }
 add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Custom_Taxonomies");'));
 
+//replace feed for sermon custom post type
+remove_all_actions( 'do_feed_rss2' );
+
+function mbpc_sermon_feed_rss2( $for_comments ) {
+	$rss_template = get_stylesheet_directory() . '/feed-mbpc_sermon-rss2.php';
+	if( get_query_var( 'post_type' ) == 'sermon' and file_exists( $rss_template ) )
+		load_template( $rss_template );
+	else
+		do_feed_rss2( $for_comments );
+}
+
+add_action( 'do_feed_rss2', 'mbpc_sermon_feed_rss2', 10, 1 );
+
+//_wp_attached_file for the MBPC theme includes the URL. Looks like this isn't the default behaviour.
+//add this filter to get rid of it so get_attached_file works properly and returns the path to the file
+function mbpc_filter_attached_file( $file ) {
+	//get rid of the extra site URL
+	$file = str_replace( site_url(), "", $file );
+	//replace the double wp-content/uploads//wp-content/uploads with a single occurence
+	$file = str_replace( "wp-content/uploads//wp-content/uploads", "wp-content/uploads", $file);
+	return $file;
+}
+
+add_filter( 'get_attached_file', 'mbpc_filter_attached_file' );
 ?>
