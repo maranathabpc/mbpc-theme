@@ -166,6 +166,7 @@ function mbpc_register_taxonomies() {
 			'labels'=>array(
 						'name'=>__('Speakers'),
 						'singular_name'=>__('Speaker'),
+						'select_name' => __( 'Select Speaker' ),
 						'search_items'=>__('Search for Speakers'),
 						'popular_items'=>__('Popular Speakers'),
 						'all_items'=>__('All Speakers'),
@@ -843,7 +844,17 @@ class My_meta_box {
 						if( $pos !== false ) {
 							$post_content = '[audio:' . $filename . '|titles=' . $currPost -> post_title . ']';
 							$post_content .= '<p>Download MP3: <a href="' . $filename . '">' . $currPost -> post_title . '</a></p>';
-							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content));
+
+							// split the last part into day.extension components
+							$day = explode( '.', $name_parts[3] );
+							$post_date = $name_parts[1] . '-' . $name_parts[2] . '-' . $day[0];
+							// append current time to post date
+							$time_str = date( 'H:i:s' );
+							$post_date .= ' ' . $time_str;
+
+							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content, 
+										'post_date' => $post_date, 'post_date_gmt' => $post_date));
+
 						}
 					}
 				}
