@@ -838,6 +838,13 @@ class My_meta_box {
 						$attach_data = wp_generate_attachment_metadata($attach_id, $filename);
 						wp_update_attachment_metadata($attach_id, $attach_data);
 
+						// split the last part into day.extension components
+						$day = explode( '.', $name_parts[3] );
+						$post_date = $name_parts[1] . '-' . $name_parts[2] . '-' . $day[0];
+						// append current time to post date
+						$time_str = date( 'H:i:s' );
+						$post_date .= ' ' . $time_str;
+
 						//update post content with the download text and link to the file
 						//add post content only if it's a sermon type
 						$pos = strpos ( strtoupper( $name_parts[0] ), 'SERMON' );
@@ -845,16 +852,13 @@ class My_meta_box {
 							$post_content = '[audio:' . $filename . '|titles=' . $currPost -> post_title . ']';
 							$post_content .= '<p>Download MP3: <a href="' . $filename . '">' . $currPost -> post_title . '</a></p>';
 
-							// split the last part into day.extension components
-							$day = explode( '.', $name_parts[3] );
-							$post_date = $name_parts[1] . '-' . $name_parts[2] . '-' . $day[0];
-							// append current time to post date
-							$time_str = date( 'H:i:s' );
-							$post_date .= ' ' . $time_str;
-
+						
 							wp_update_post(array('ID' => $post_id, 'post_content' => $post_content, 
 										'post_date' => $post_date, 'post_date_gmt' => $post_date));
-
+						}
+						else {
+							// update the date if it isn't a sermon
+							wp_update_post( array( 'ID' => $post_id, 'post_date' => $post_date, 'post_date_gmt' => $post_date ) );
 						}
 					}
 				}
