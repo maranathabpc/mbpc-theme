@@ -939,7 +939,7 @@ function mbpc_wp_get_attachment_url_filter($url, $postID) {
  */
 function mbpc_accordion_categories( $cat_list, $args ) {
 	// get names of the top level terms in an array
-	$top_level_terms = get_terms( $args[ 'taxonomy' ], array( 'parent' => 0, 'fields' => 'names') );
+	$top_level_terms = get_terms( $args[ 'taxonomy' ], array( 'parent' => 0, 'fields' => 'names', 'hide_empty' => 0) );
 	
 	$output = '<div id="accordion-' . $args[ 'taxonomy' ] .'">';
 	// because wp_list_categories() was passed something other than 'list' for the style argument,
