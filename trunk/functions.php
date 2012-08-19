@@ -932,6 +932,40 @@ function mbpc_wp_get_attachment_url_filter($url, $postID) {
 /*****   End code for wp_get_attachment_url filter **************/
 
 
+
+/* Filter output from wp_list_categories, which has been passed a different parameter so a list isn't output
+ *
+ *
+ */
+function mbpc_accordion_categories( $cat_list, $args ) {
+	// get names of the top level terms in an array
+	$top_level_terms = get_terms( $args[ 'taxonomy' ], array( 'parent' => 0, 'fields' => 'names') );
+	
+	$output = '<div id="accordion-' . $args[ 'taxonomy' ] .'">';
+	// because wp_list_categories() was passed something other than 'list' for the style argument,
+	// it returns a simple list of <a> elements, one for each taxonomy term
+	//get a match of each link the list of <a> elements in $cat_list
+	preg_match_all( "|<a .*>(.*)</a>|", $cat_list, $cat_links, PREG_SET_ORDER);
+	$first_header = true;
+	foreach( $cat_links as $cat_link ) {
+		if( in_array( $cat_link[1], $top_level_terms ) ) {
+			if ( $first_header == false ) {
+				$output .= '</ul></div>';
+			}
+			else
+				$first_header = false;
+			$output .= '<h3>' . $cat_link[1] . '</h3><div><ul class="accordion-list-content">';
+		}
+		else {
+			$output .= '<li>' . $cat_link[0] . '</li>';
+		}
+	}
+
+
+	$output .= "</div>";
+
+	return $output;
+}
 /**
  * Categories/Taxonomies widget class
  * Originally taken from default widgets. Modified to accept an additional parameter for taxonomy 
@@ -952,6 +986,7 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 		$c = $instance['count'] ? '1' : '0';
 		$h = $instance['hierarchical'] ? '1' : '0';
 		$d = $instance['dropdown'] ? '1' : '0';
+		$accordion = $instance['accordion'] ? '1' : '0';
 		$tax = $instance['taxonomy'];
 
 		echo $before_widget;
@@ -980,12 +1015,28 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 <?php
 		} else {
 ?>
-		<ul>
 <?php
+		// if it's the default 'list' style, leave the output alone
 		$cat_args['title_li'] = '';
+		$cat_args[ 'order' ] = 'DESC';
+
+		// pass in a diff style argument to get a simpler to parse output
+		// activate the filter function to make the output match the require accordion format
+		if( $accordion ) {
+			$cat_args[ 'style' ] = 'accordion';
+			add_filter( 'wp_list_categories', 'mbpc_accordion_categories', 10, 2 );
+		}
+		// default behaviour is to put everything in an unordered list
+		else
+			echo '<ul>';
 		wp_list_categories(apply_filters('widget_categories_args', $cat_args));
+		// remove the filter here so subsequent widgets won't be affected
+		remove_filter( 'wp_list_categories', 'mbpc_accordion_categories' );
+
+		// close the unordered list of the default behaviour
+		if( ! $accordion )
+			echo '</ul>';
 ?>
-		</ul>
 <?php
 		}
 
@@ -999,6 +1050,7 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 		$instance['count'] = !empty($new_instance['count']) ? 1 : 0;
 		$instance['hierarchical'] = !empty($new_instance['hierarchical']) ? 1 : 0;
 		$instance['dropdown'] = !empty($new_instance['dropdown']) ? 1 : 0;
+		$instance['accordion'] = !empty($new_instance['accordion']) ? 1 : 0;
 
 		return $instance;
 	}
@@ -1011,6 +1063,7 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 		$count = isset($instance['count']) ? (bool) $instance['count'] :false;
 		$hierarchical = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : false;
 		$dropdown = isset( $instance['dropdown'] ) ? (bool) $instance['dropdown'] : false;
+		$accordion = isset( $instance['accordion'] ) ? (bool) $instance['accordion'] : false;
 ?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
@@ -1026,6 +1079,9 @@ class WP_Widget_Custom_Taxonomies extends WP_Widget {
 
 		<input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('hierarchical'); ?>" name="<?php echo $this->get_field_name('hierarchical'); ?>"<?php checked( $hierarchical ); ?> />
 		<label for="<?php echo $this->get_field_id('hierarchical'); ?>"><?php _e( 'Show hierarchy' ); ?></label></p>
+
+		<p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('accordion'); ?>" name="<?php echo $this->get_field_name('accordion'); ?>"<?php checked( $accordion ); ?> />
+		<label for="<?php echo $this->get_field_id('accordion'); ?>"><?php _e( 'jQuery Accordion Style' ); ?></label><br />
 <?php
 	}
 
