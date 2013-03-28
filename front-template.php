@@ -8,6 +8,7 @@ get_header(); ?>
 		<div id="container">
 			<div id="content" role="main">
 
+<?php if ( function_exists( 'get_smooth_slider' ) ) { get_smooth_slider(); } ?>
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
 				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

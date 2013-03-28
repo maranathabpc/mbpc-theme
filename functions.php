@@ -399,7 +399,7 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 }
 
 function enqueue_accordion_script() {
-	wp_register_script( 'enqueue-accordion-script', get_stylesheet_directory_uri() . '/scripts/jquery-ui-1.8.13.custom.min.js',
+	wp_register_script( 'enqueue-accordion-script', get_stylesheet_directory_uri() . '/scripts/jquery-ui-1.10.2.custom.min.js',
 						array( 'jquery' ) );
 	wp_enqueue_script( 'enqueue-accordion-script' );
 }
