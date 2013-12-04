@@ -17,6 +17,7 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	xmlns:atom="http://www.w3.org/2005/Atom"
 	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:bible="http://www.maranatha-bpc.com/"
 	<?php
 	/**
 	 * Fires at the end of the RSS root to add namespaces.
