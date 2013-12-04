@@ -71,7 +71,6 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 	<item>
 		<title><?php the_title_rss() ?></title>
 		<link><?php the_permalink_rss() ?></link>
-		<comments><?php comments_link_feed(); ?></comments>
 		<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
 		<dc:creator><![CDATA[<?php the_author() ?>]]></dc:creator>
 		<?php the_category_rss('rss2') ?>
@@ -88,8 +87,16 @@ echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?'.'>'; ?>
 		<content:encoded><![CDATA[<?php the_excerpt_rss(); ?>]]></content:encoded>
 	<?php endif; ?>
 <?php endif; ?>
-		<wfw:commentRss><?php echo esc_url( get_post_comments_feed_link(null, 'rss2') ); ?></wfw:commentRss>
-		<slash:comments><?php echo get_comments_number(); ?></slash:comments>
+<?php
+	$memVerseRef = get_post_meta( get_the_ID(), 'mbpc_mem_verse_ref_text', true );
+	if ( strlen( $memVerseRef ) > 0 ) : ?>
+		<bible:reference><![CDATA[<?php echo $memVerseRef; ?>]]></bible:reference>
+	<?php endif; ?>
+<?php
+	$memVerseText = get_post_meta( get_the_ID(), 'mbpc_mem_verse_textarea', true );
+	if ( strlen( $memVerseText ) > 0 ): ?>
+		<bible:verse><![CDATA[<?php echo $memVerseText; ?>]]></bible:verse>
+	<?php endif; ?>
 <?php rss_enclosure(); ?>
 	<?php
 	/**
