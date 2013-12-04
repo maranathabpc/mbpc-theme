@@ -1092,11 +1092,17 @@ add_action('widgets_init', create_function('', 'return register_widget("WP_Widge
 remove_all_actions( 'do_feed_rss2' );
 
 function mbpc_sermon_feed_rss2( $for_comments ) {
-	$rss_template = get_stylesheet_directory() . '/feed-mbpc_sermon-rss2.php';
-	if( get_query_var( 'post_type' ) == 'sermon' and file_exists( $rss_template ) )
-		load_template( $rss_template );
-	else
+	$rss_sermon_template = get_stylesheet_directory() . '/feed-mbpc_sermon-rss2.php';
+	$rss_newsletter_template = get_stylesheet_directory() . '/feed-mbpc_newsletter-rss2.php';
+	if( get_query_var( 'post_type' ) == 'sermon' and file_exists( $rss_sermon_template ) ) {
+		load_template( $rss_sermon_template );
+	}
+	else if( get_query_var( 'post_type' ) == 'newsletter' and file_exists( $rss_newsletter_template ) ) {
+		load_template( $rss_newsletter_template );
+	}
+	else {
 		do_feed_rss2( $for_comments );
+	}
 }
 
 add_action( 'do_feed_rss2', 'mbpc_sermon_feed_rss2', 10, 1 );
