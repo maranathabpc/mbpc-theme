@@ -353,9 +353,17 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 	$html = wp_get_archives($args); // let WP do the hard stuff
 	
 	if($post_type != 'all' and $type != 'postbypost' and $type != 'alpha') {
-		$pattern = get_bloginfo('url') . '/blog/';
-		$replacement = get_bloginfo('url') . '/' . $post_type .'/';
-		
+		 //Generate CPT archive links for chinese site
+		if( strpos(get_bloginfo('url'), 'chinese') ) {
+			$pattern = get_bloginfo('url');
+			$replacement = get_bloginfo('url') . '/' . $post_type;
+		}
+		//Replace default 'blog' path with CPT name
+		//This is for the default english site
+		else {
+			$pattern = get_bloginfo('url') . '/blog/';
+			$replacement = get_bloginfo('url') . '/' . $post_type .'/';
+		}
 		$html = str_replace($pattern, $replacement, $html);
 	}
 
