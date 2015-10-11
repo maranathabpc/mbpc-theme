@@ -406,17 +406,9 @@ function mbpc_get_post_type_archives($post_type, $args = array()) {
 		return $html;
 }
 
-function enqueue_accordion_script() {
-	wp_register_script( 'enqueue-accordion-script', get_stylesheet_directory_uri() . '/scripts/jquery-ui-1.10.2.custom.min.js',
-						array( 'jquery' ) );
-	wp_enqueue_script( 'enqueue-accordion-script' );
-}
-
-add_action( 'init', 'enqueue_accordion_script' );
-
 function add_jquery_accordion() {
 	wp_enqueue_script( 'add-jquery-accordion', get_stylesheet_directory_uri() . '/scripts/jquery-accordion-init.js', 
-						array( 'jquery', 'enqueue-accordion-script' ) );
+						array( 'jquery-ui-accordion' ) );
 }
 add_action( 'init', 'add_jquery_accordion' );
 
