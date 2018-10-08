@@ -33,7 +33,7 @@
 		echo ' | ' . sprintf( __( 'Page %s', 'twentyten' ), max( $paged, $page ) );
 
 	?></title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="profile" href="https://gmpg.org/xfn/11" />
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 <link rel="shortcut icon" href="<?php bloginfo('stylesheet_directory'); ?>/favicon.ico" />
@@ -46,7 +46,7 @@
 
 	//redirects search page to google custom search result
 	if(is_search()) {
-		$result_url = 'http://maranatha-bpc.com/search/?cx=004747598253915007065:he2ysjuzafw&cof=FORID:10&ie=UTF-8&sa=Search&siteurl=maranatha-bpc.com%2F&q=';
+		$result_url = 'https://maranatha-bpc.com/search/?cx=004747598253915007065:he2ysjuzafw&cof=FORID:10&ie=UTF-8&sa=Search&siteurl=maranatha-bpc.com%2F&q=';
 		header('Location:'.$result_url.$s);
 		exit;
 	}
@@ -84,7 +84,7 @@
 				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 				<!-- add google custom search box -->
 				<div id="search">
-				<form action="http://maranatha-bpc.com/search" id="cse-search-box">
+				<form action="https://maranatha-bpc.com/search" id="cse-search-box">
 					<div>
 						<input type="hidden" name="cx" value="004747598253915007065:he2ysjuzafw" />
 						<input type="hidden" name="cof" value="FORID:10" />
@@ -93,7 +93,7 @@
 						<input type="submit" name="sa" value="Search" />
 					</div>
 				</form>
-				<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
+				<script type="text/javascript" src="https://www.google.com/cse/brand?form=cse-search-box&lang=en"></script>
 				</div><!-- #search -->
 				</div><!-- #nav-container -->
 

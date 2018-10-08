@@ -61,7 +61,7 @@ add_filter('get_search_form', create_function('$a',"return null;"));
 add_action('wp_head', 'ubuntu_font');
 function ubuntu_font() {
 ?>
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold' rel='stylesheet' type='text/css'>
 <?php
 }
 
@@ -484,8 +484,8 @@ class WP_Widget_Custom_Post_Type_Archives extends WP_Widget {
 
 add_action('widgets_init', create_function('', 'return register_widget("WP_Widget_Custom_Post_Type_Archives");'));
 
-//from the meta box tutorial at http://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
-//new code is from the multiple meta box tutorial at http://www.deluxeblogtips.com/2010/05/howto-meta-box-wordpress.html
+//from the meta box tutorial at https://www.deluxeblogtips.com/2010/04/how-to-create-meta-box-wordpress-post.html
+//new code is from the multiple meta box tutorial at https://www.deluxeblogtips.com/2010/05/howto-meta-box-wordpress.html
 /**************************************************************************************************************
  *  the code below adds meta boxes for the sermon, newsletter, and qna post types
  *************************************************************************************************************/
@@ -603,13 +603,14 @@ class My_meta_box {
     function __construct($meta_box) {
         $this->_meta_box = $meta_box;
 		
-		// fix upload bug: http://www.hashbangcode.com/blog/add-enctype-wordpress-post-and-page-forms-471.html
+		// fix upload bug: https://www.hashbangcode.com/blog/add-enctype-wordpress-post-and-page-forms-471.html
 		$upload = false;
 		foreach ($meta_box['fields'] as $field) {
 			if ($field['type'] == 'file' || $field['type'] == 'image') {		//no support in the rest of this code for images
 				$upload = true;
 				break;
 			}
+		}
 		}
 		$current_page = substr(strrchr($_SERVER['PHP_SELF'], '/'), 1, -4);
 		if ($upload && ($current_page == 'page' || $current_page == 'page-new' || $current_page == 'post' || $current_page == 'post-new')) {
@@ -884,7 +885,7 @@ class My_meta_box {
 	 *
 	 * @param array $files
 	 * @author Corey Ballou
-	 * @link http://www.jqueryin.com
+	 * @link https://www.jqueryin.com
 	 */
 	function fix_file_array(&$files) {
 		$names = array(
